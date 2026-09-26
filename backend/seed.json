@@ -1,0 +1,813 @@
+{
+  "animals": [
+    {
+      "id": 1,
+      "qrCode": "ZOO-001",
+      "name": "Hổ Bengal",
+      "scientificName": "Panthera tigris tigris",
+      "category": "mammals",
+      "zone": "asia",
+      "emoji": "🐅",
+      "featured": true,
+      "popularity": 98,
+      "description": "Hổ Bengal là phân loài hổ đông nhất còn tồn tại trong tự nhiên. Chúng sống đơn độc, săn mồi chủ yếu vào lúc chạng vạng và có thể bơi rất giỏi.",
+      "habitat": "Rừng nhiệt đới, rừng ngập mặn, đồng cỏ cao",
+      "diet": "Nai, lợn rừng, trâu rừng và các loài thú lớn",
+      "lifespan": "10–15 năm (tự nhiên), đến 20 năm (nuôi nhốt)",
+      "size": "Dài 2,7–3,1 m, nặng 180–260 kg",
+      "distribution": "Ấn Độ, Bangladesh, Nepal, Bhutan",
+      "conservationStatus": "EN",
+      "features": [
+        "Mỗi cá thể có hoa văn sọc riêng như vân tay",
+        "Có thể nhảy xa khoảng 6 m",
+        "Tiếng gầm nghe được từ cách xa 3 km"
+      ],
+      "funFacts": [
+        "Da hổ cũng có sọc, không chỉ lớp lông.",
+        "Hổ thích nước và thường ngâm mình để giải nhiệt."
+      ],
+      "image": "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "hổ",
+        "cọp"
+      ]
+    },
+    {
+      "id": 2,
+      "qrCode": "ZOO-002",
+      "name": "Sư tử châu Phi",
+      "scientificName": "Panthera leo",
+      "category": "mammals",
+      "zone": "africa",
+      "emoji": "🦁",
+      "featured": true,
+      "popularity": 95,
+      "description": "Sư tử là loài mèo lớn duy nhất sống theo bầy đàn. Con cái đảm nhận phần lớn việc săn mồi, còn con đực bảo vệ lãnh thổ.",
+      "habitat": "Thảo nguyên, xavan, rừng thưa",
+      "diet": "Linh dương, ngựa vằn, trâu rừng",
+      "lifespan": "10–14 năm",
+      "size": "Dài 1,4–2,5 m, nặng 120–250 kg",
+      "distribution": "Châu Phi cận Sahara",
+      "conservationStatus": "VU",
+      "features": [
+        "Bờm của con đực sẫm dần theo tuổi",
+        "Ngủ tới 20 giờ mỗi ngày"
+      ],
+      "funFacts": [
+        "Một bầy sư tử có thể có tới 30 con."
+      ],
+      "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "sư tử"
+      ]
+    },
+    {
+      "id": 3,
+      "qrCode": "ZOO-003",
+      "name": "Voi châu Á",
+      "scientificName": "Elephas maximus",
+      "category": "mammals",
+      "zone": "asia",
+      "emoji": "🐘",
+      "featured": true,
+      "popularity": 92,
+      "description": "Voi châu Á nhỏ hơn voi châu Phi, tai nhỏ và tròn hơn. Chúng rất thông minh, có trí nhớ tốt và sống theo đàn do con cái lớn tuổi dẫn dắt.",
+      "habitat": "Rừng nhiệt đới, rừng khô, đồng cỏ",
+      "diet": "Cỏ, lá cây, vỏ cây, trái cây",
+      "lifespan": "60–70 năm",
+      "size": "Cao 2–3,5 m, nặng 3–5 tấn",
+      "distribution": "Ấn Độ, Đông Nam Á, trong đó có Việt Nam",
+      "conservationStatus": "EN",
+      "features": [
+        "Ăn tới 150 kg thức ăn mỗi ngày",
+        "Vòi có khoảng 40.000 cơ"
+      ],
+      "funFacts": [
+        "Voi có thể nhận ra chính mình trong gương."
+      ],
+      "image": "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "voi"
+      ]
+    },
+    {
+      "id": 4,
+      "qrCode": "ZOO-004",
+      "name": "Hươu cao cổ",
+      "scientificName": "Giraffa camelopardalis",
+      "category": "mammals",
+      "zone": "africa",
+      "emoji": "🦒",
+      "featured": true,
+      "popularity": 90,
+      "description": "Hươu cao cổ là động vật trên cạn cao nhất thế giới. Chiếc cổ dài giúp chúng ăn lá ở những tán cây cao mà loài khác không với tới.",
+      "habitat": "Xavan, rừng thưa",
+      "diet": "Lá cây keo và các loại lá non",
+      "lifespan": "20–25 năm",
+      "size": "Cao 4,5–5,5 m, nặng 800–1.200 kg",
+      "distribution": "Đông và Nam châu Phi",
+      "conservationStatus": "VU",
+      "features": [
+        "Lưỡi dài khoảng 50 cm, màu xanh đen",
+        "Tim nặng khoảng 11 kg"
+      ],
+      "funFacts": [
+        "Cổ hươu cao cổ chỉ có 7 đốt sống, bằng với con người."
+      ],
+      "image": "https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "hươu cao cổ",
+        "hươu"
+      ]
+    },
+    {
+      "id": 5,
+      "qrCode": "ZOO-005",
+      "name": "Ngựa vằn",
+      "scientificName": "Equus quagga",
+      "category": "mammals",
+      "zone": "africa",
+      "emoji": "🦓",
+      "featured": false,
+      "popularity": 80,
+      "description": "Ngựa vằn sống theo đàn lớn trên thảo nguyên. Những sọc đen trắng giúp chúng gây rối mắt kẻ săn mồi khi cả đàn di chuyển.",
+      "habitat": "Thảo nguyên, đồng cỏ",
+      "diet": "Cỏ, lá, chồi non",
+      "lifespan": "20–25 năm",
+      "size": "Cao 1,2–1,4 m, nặng 300–400 kg",
+      "distribution": "Đông và Nam châu Phi",
+      "conservationStatus": "NT",
+      "features": [
+        "Hoa văn sọc của mỗi con là duy nhất"
+      ],
+      "funFacts": [
+        "Sọc vằn có thể giúp xua đuổi ruồi hút máu."
+      ],
+      "image": "https://images.unsplash.com/photo-1526095179574-86e545346ae6?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "ngựa vằn"
+      ]
+    },
+    {
+      "id": 6,
+      "qrCode": "ZOO-006",
+      "name": "Gấu trúc lớn",
+      "scientificName": "Ailuropoda melanoleuca",
+      "category": "mammals",
+      "zone": "asia",
+      "emoji": "🐼",
+      "featured": true,
+      "popularity": 97,
+      "description": "Gấu trúc lớn là biểu tượng của công tác bảo tồn. Dù thuộc bộ ăn thịt, 99% khẩu phần của chúng là tre.",
+      "habitat": "Rừng tre vùng núi cao",
+      "diet": "Tre, măng; đôi khi ăn động vật nhỏ",
+      "lifespan": "20 năm (tự nhiên), 30 năm (nuôi nhốt)",
+      "size": "Dài 1,2–1,9 m, nặng 70–125 kg",
+      "distribution": "Miền Trung Trung Quốc",
+      "conservationStatus": "VU",
+      "features": [
+        "Có \"ngón cái giả\" để cầm tre",
+        "Ăn 12–38 kg tre mỗi ngày"
+      ],
+      "funFacts": [
+        "Gấu trúc con khi mới sinh chỉ nặng khoảng 100 g."
+      ],
+      "image": "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "gấu trúc"
+      ]
+    },
+    {
+      "id": 7,
+      "qrCode": "ZOO-007",
+      "name": "Cá sấu nước lợ",
+      "scientificName": "Crocodylus porosus",
+      "category": "reptiles",
+      "zone": "reptiles",
+      "emoji": "🐊",
+      "featured": false,
+      "popularity": 78,
+      "description": "Cá sấu nước lợ là loài bò sát lớn nhất còn tồn tại. Chúng có lực cắn thuộc hàng mạnh nhất trong thế giới động vật.",
+      "habitat": "Cửa sông, rừng ngập mặn, đầm lầy ven biển",
+      "diet": "Cá, chim, thú có vú",
+      "lifespan": "70 năm trở lên",
+      "size": "Dài 4–6 m, nặng 400–1.000 kg",
+      "distribution": "Đông Nam Á, Bắc Úc",
+      "conservationStatus": "LC",
+      "features": [
+        "Có thể nhịn ăn nhiều tháng",
+        "Nhiệt độ ổ trứng quyết định giới tính con non"
+      ],
+      "funFacts": [
+        "Cá sấu nuốt đá nhỏ để giúp tiêu hóa và giữ thăng bằng khi bơi."
+      ],
+      "image": "https://images.unsplash.com/photo-1583845112239-97ef1341b271?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "cá sấu"
+      ]
+    },
+    {
+      "id": 8,
+      "qrCode": "ZOO-008",
+      "name": "Chim công",
+      "scientificName": "Pavo cristatus",
+      "category": "birds",
+      "zone": "birds",
+      "emoji": "🦚",
+      "featured": true,
+      "popularity": 85,
+      "description": "Chim công đực nổi tiếng với bộ lông đuôi rực rỡ có các \"mắt\" tròn, dùng để thu hút con cái vào mùa sinh sản.",
+      "habitat": "Rừng thưa, ven đồng ruộng",
+      "diet": "Hạt, côn trùng, bò sát nhỏ",
+      "lifespan": "15–20 năm",
+      "size": "Dài 1–2,2 m (tính cả đuôi), nặng 4–6 kg",
+      "distribution": "Ấn Độ, Sri Lanka",
+      "conservationStatus": "LC",
+      "features": [
+        "Bộ lông đuôi có tới 200 chiếc lông"
+      ],
+      "funFacts": [
+        "Công con được gọi là \"peachick\" trong tiếng Anh."
+      ],
+      "image": "https://images.unsplash.com/photo-1591608971362-f08b2a75731a?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "chim công"
+      ]
+    },
+    {
+      "id": 9,
+      "qrCode": "ZOO-009",
+      "name": "Voọc chà vá chân nâu",
+      "scientificName": "Pygathrix nemaeus",
+      "category": "mammals",
+      "zone": "asia",
+      "emoji": "🐒",
+      "featured": false,
+      "popularity": 83,
+      "description": "Được mệnh danh là \"nữ hoàng linh trưởng\", voọc chà vá chân nâu có bộ lông nhiều màu sắc và là loài đặc hữu quý hiếm của Đông Dương.",
+      "habitat": "Rừng nhiệt đới thường xanh",
+      "diet": "Lá non, quả, hoa",
+      "lifespan": "20–25 năm",
+      "size": "Dài 55–63 cm (chưa tính đuôi), nặng 8–11 kg",
+      "distribution": "Việt Nam, Lào, Campuchia",
+      "conservationStatus": "CR",
+      "features": [
+        "Mặt màu vàng cam, chân màu nâu đỏ",
+        "Sống theo đàn 4–15 con"
+      ],
+      "funFacts": [
+        "Bán đảo Sơn Trà (Đà Nẵng) là nơi có quần thể lớn của loài này."
+      ],
+      "image": "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "voọc",
+        "khỉ"
+      ]
+    },
+    {
+      "id": 10,
+      "qrCode": "ZOO-010",
+      "name": "Hà mã",
+      "scientificName": "Hippopotamus amphibius",
+      "category": "mammals",
+      "zone": "africa",
+      "emoji": "🦛",
+      "featured": false,
+      "popularity": 76,
+      "description": "Hà mã dành phần lớn ban ngày ngâm mình dưới nước và lên bờ ăn cỏ vào ban đêm. Chúng là một trong những loài nguy hiểm nhất châu Phi.",
+      "habitat": "Sông, hồ, đầm lầy",
+      "diet": "Cỏ (khoảng 35 kg mỗi đêm)",
+      "lifespan": "40–50 năm",
+      "size": "Dài 3,3–5,2 m, nặng 1,5–3 tấn",
+      "distribution": "Châu Phi cận Sahara",
+      "conservationStatus": "VU",
+      "features": [
+        "Tiết ra \"mồ hôi đỏ\" giúp chống nắng",
+        "Nín thở được khoảng 5 phút"
+      ],
+      "funFacts": [
+        "Hà mã không thật sự bơi mà đi bộ dưới đáy nước."
+      ],
+      "image": "https://images.unsplash.com/photo-1535338454770-8be927b5a00b?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "hà mã"
+      ]
+    },
+    {
+      "id": 11,
+      "qrCode": "ZOO-011",
+      "name": "Hồng hạc",
+      "scientificName": "Phoenicopterus roseus",
+      "category": "birds",
+      "zone": "birds",
+      "emoji": "🦩",
+      "featured": false,
+      "popularity": 74,
+      "description": "Màu hồng của hồng hạc đến từ sắc tố carotenoid trong tảo và tôm nhỏ mà chúng ăn hằng ngày.",
+      "habitat": "Hồ nước mặn, đầm phá ven biển",
+      "diet": "Tảo, tôm nhỏ, ấu trùng",
+      "lifespan": "20–30 năm",
+      "size": "Cao 1,1–1,5 m, nặng 2–4 kg",
+      "distribution": "Châu Phi, Nam Âu, Nam Á",
+      "conservationStatus": "LC",
+      "features": [
+        "Thường đứng bằng một chân để giữ nhiệt"
+      ],
+      "funFacts": [
+        "Hồng hạc con có lông màu xám."
+      ],
+      "image": "https://images.unsplash.com/photo-1497206365907-f5e630693df0?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "hồng hạc"
+      ]
+    },
+    {
+      "id": 12,
+      "qrCode": "ZOO-012",
+      "name": "Rùa biển xanh",
+      "scientificName": "Chelonia mydas",
+      "category": "aquatic",
+      "zone": "aquatic",
+      "emoji": "🐢",
+      "featured": false,
+      "popularity": 81,
+      "description": "Rùa biển xanh di cư hàng nghìn km giữa bãi ăn và bãi đẻ. Con cái quay lại đúng bãi biển nơi chúng được sinh ra để đẻ trứng.",
+      "habitat": "Vùng biển nhiệt đới, rạn san hô, thảm cỏ biển",
+      "diet": "Cỏ biển, tảo",
+      "lifespan": "60–80 năm",
+      "size": "Dài 0,8–1,2 m, nặng 70–190 kg",
+      "distribution": "Các vùng biển nhiệt đới, có Côn Đảo (Việt Nam)",
+      "conservationStatus": "EN",
+      "features": [
+        "Có thể nín thở dưới nước tới 5 giờ khi ngủ"
+      ],
+      "funFacts": [
+        "Tên gọi \"xanh\" đến từ màu mỡ dưới lớp mai."
+      ],
+      "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "rùa biển",
+        "rùa"
+      ]
+    },
+    {
+      "id": 13,
+      "qrCode": "ZOO-013",
+      "name": "Ếch phi tiêu độc xanh",
+      "scientificName": "Dendrobates tinctorius",
+      "category": "amphibians",
+      "zone": "reptiles",
+      "emoji": "🐸",
+      "featured": false,
+      "popularity": 70,
+      "description": "Màu sắc sặc sỡ là lời cảnh báo kẻ thù về chất độc trên da. Cá thể nuôi nhốt không còn độc vì không ăn các loài côn trùng tạo độc tố.",
+      "habitat": "Tầng lá mục trong rừng mưa nhiệt đới",
+      "diet": "Kiến, mối, côn trùng nhỏ",
+      "lifespan": "10–15 năm",
+      "size": "Dài 3–5 cm",
+      "distribution": "Nam Mỹ (Guiana, Brazil)",
+      "conservationStatus": "LC",
+      "features": [
+        "Ếch bố cõng nòng nọc lên lưng đưa tới vũng nước"
+      ],
+      "funFacts": [
+        "Thổ dân từng dùng chất độc của loài ếch này tẩm mũi phi tiêu."
+      ],
+      "image": "https://images.unsplash.com/photo-1579380656108-f98e4df8ea62?auto=format&fit=crop&w=1200&q=75",
+      "aliases": [
+        "ếch"
+      ]
+    }
+  ],
+  "zones": [
+    {
+      "id": "asia",
+      "name": "Khu động vật châu Á",
+      "shortName": "Châu Á",
+      "emoji": "🐅",
+      "color": "#4E8B5F",
+      "description": "Rừng nhiệt đới thu nhỏ với hổ Bengal, voi châu Á, gấu trúc và các loài linh trưởng quý hiếm của Việt Nam.",
+      "openHours": "7:30 – 17:30",
+      "area": "3,2 ha",
+      "image": "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1000&q=70"
+    },
+    {
+      "id": "africa",
+      "name": "Khu động vật châu Phi",
+      "shortName": "Châu Phi",
+      "emoji": "🦁",
+      "color": "#C08A3E",
+      "description": "Thảo nguyên rộng mở nơi sư tử, hươu cao cổ, ngựa vằn và hà mã sinh sống gần giống môi trường tự nhiên.",
+      "openHours": "7:30 – 17:30",
+      "area": "4,5 ha",
+      "image": "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=70"
+    },
+    {
+      "id": "birds",
+      "name": "Khu chim",
+      "shortName": "Khu chim",
+      "emoji": "🦚",
+      "color": "#5B8DB8",
+      "description": "Lồng chim lớn đi bộ xuyên qua được, với chim công, hồng hạc và hơn 40 loài chim nhiệt đới.",
+      "openHours": "8:00 – 17:00",
+      "area": "1,4 ha",
+      "image": "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=1000&q=70"
+    },
+    {
+      "id": "reptiles",
+      "name": "Khu bò sát",
+      "shortName": "Bò sát",
+      "emoji": "🐊",
+      "color": "#7A8B3A",
+      "description": "Nhà bò sát và lưỡng cư có kiểm soát nhiệt độ: cá sấu, trăn, kỳ đà và các loài ếch nhiệt đới.",
+      "openHours": "8:00 – 17:00",
+      "area": "0,9 ha",
+      "image": "https://images.unsplash.com/photo-1531386151447-fd76ad50012f?auto=format&fit=crop&w=1000&q=70"
+    },
+    {
+      "id": "aquatic",
+      "name": "Khu động vật dưới nước",
+      "shortName": "Thủy sinh",
+      "emoji": "🐢",
+      "color": "#3E8FA8",
+      "description": "Hồ thủy sinh với đường hầm kính, nơi bạn quan sát rùa biển và cá rạn san hô ở khoảng cách gần.",
+      "openHours": "8:00 – 17:00",
+      "area": "1,1 ha",
+      "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=70"
+    }
+  ],
+  "tours": [
+    {
+      "id": "asia-discovery",
+      "name": "Tuyến khám phá châu Á",
+      "description": "Đi sâu vào rừng nhiệt đới châu Á, gặp hổ, voi, gấu trúc và voọc chà vá.",
+      "duration": "90 phút",
+      "distance": "1,6 km",
+      "difficulty": "Dễ",
+      "audience": "Mọi lứa tuổi",
+      "emoji": "🌿",
+      "stops": [
+        "gate",
+        "reptiles",
+        "asia",
+        "birds",
+        "restaurant",
+        "gate"
+      ]
+    },
+    {
+      "id": "wildlife",
+      "name": "Tuyến động vật hoang dã",
+      "description": "Hành trình qua các loài săn mồi và thú lớn của châu Á và châu Phi.",
+      "duration": "2 giờ",
+      "distance": "2,4 km",
+      "difficulty": "Trung bình",
+      "audience": "Thanh thiếu niên, người lớn",
+      "emoji": "🦁",
+      "stops": [
+        "gate",
+        "asia",
+        "birds",
+        "africa",
+        "aquatic",
+        "gate"
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Tuyến gia đình",
+      "description": "Quãng đường ngắn, nhiều điểm nghỉ và nhà vệ sinh, phù hợp khi đi cùng trẻ nhỏ.",
+      "duration": "75 phút",
+      "distance": "1,2 km",
+      "difficulty": "Dễ",
+      "audience": "Gia đình có trẻ nhỏ",
+      "emoji": "👨‍👩‍👧",
+      "stops": [
+        "gate",
+        "wc-1",
+        "reptiles",
+        "restaurant",
+        "aquatic",
+        "rest",
+        "gate"
+      ]
+    },
+    {
+      "id": "express",
+      "name": "Tuyến khám phá nhanh",
+      "description": "Ít thời gian? Ghé qua những loài nổi bật nhất trong khoảng 45 phút.",
+      "duration": "45 phút",
+      "distance": "0,9 km",
+      "difficulty": "Dễ",
+      "audience": "Khách có ít thời gian",
+      "emoji": "⚡",
+      "stops": [
+        "gate",
+        "restaurant",
+        "africa",
+        "wc-2",
+        "gate"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Quản trị viên",
+      "email": "admin@zooguide.vn",
+      "password": "admin123",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2026-01-10",
+      "avatar": ""
+    },
+    {
+      "id": 2,
+      "fullName": "Nguyễn Minh Anh",
+      "email": "user@zooguide.vn",
+      "password": "user123",
+      "role": "visitor",
+      "status": "active",
+      "createdAt": "2026-03-02",
+      "avatar": ""
+    },
+    {
+      "id": 3,
+      "fullName": "Trần Quốc Bảo",
+      "email": "bao.tran@example.com",
+      "password": "123456",
+      "role": "visitor",
+      "status": "active",
+      "createdAt": "2026-04-18",
+      "avatar": ""
+    },
+    {
+      "id": 4,
+      "fullName": "Lê Thị Thu Hà",
+      "email": "thuha@example.com",
+      "password": "123456",
+      "role": "visitor",
+      "status": "locked",
+      "createdAt": "2026-05-21",
+      "avatar": ""
+    },
+    {
+      "id": 5,
+      "fullName": "Phạm Gia Huy",
+      "email": "giahuy@example.com",
+      "password": "123456",
+      "role": "staff",
+      "status": "active",
+      "createdAt": "2026-06-07",
+      "avatar": ""
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "animalId": 1,
+      "userId": 2,
+      "userName": "Nguyễn Minh Anh",
+      "rating": 5,
+      "comment": "Phần thuyết minh về hổ rất dễ hiểu, con mình nghe say mê.",
+      "status": "approved",
+      "createdAt": "2026-08-12"
+    },
+    {
+      "id": 2,
+      "animalId": 6,
+      "userId": 3,
+      "userName": "Trần Quốc Bảo",
+      "rating": 4,
+      "comment": "Gấu trúc dễ thương, nên có thêm giờ cho ăn trong ứng dụng.",
+      "status": "approved",
+      "createdAt": "2026-08-20"
+    },
+    {
+      "id": 3,
+      "animalId": 1,
+      "userId": 3,
+      "userName": "Trần Quốc Bảo",
+      "rating": 4,
+      "comment": "Quét QR nhanh, thông tin rõ ràng.",
+      "status": "pending",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 4,
+      "animalId": 3,
+      "userId": 4,
+      "userName": "Lê Thị Thu Hà",
+      "rating": 3,
+      "comment": "Bản đồ hơi khó nhìn trên điện thoại nhỏ.",
+      "status": "pending",
+      "createdAt": "2026-09-05"
+    },
+    {
+      "id": 5,
+      "animalId": 9,
+      "userId": 2,
+      "userName": "Nguyễn Minh Anh",
+      "rating": 5,
+      "comment": "Lần đầu biết về voọc chà vá chân nâu, rất ý nghĩa.",
+      "status": "approved",
+      "createdAt": "2026-09-10"
+    }
+  ],
+  "mapPoints": [
+    {
+      "id": "gate",
+      "type": "gate",
+      "name": "Cổng chính",
+      "icon": "🎟️",
+      "x": 50,
+      "y": 92,
+      "description": "Quầy vé, gửi xe, thuê xe đẩy và nhận bản đồ giấy."
+    },
+    {
+      "id": "asia",
+      "type": "zone",
+      "zoneId": "asia",
+      "name": "Khu châu Á",
+      "icon": "🐅",
+      "x": 22,
+      "y": 30,
+      "description": "Hổ Bengal, voi châu Á, gấu trúc, voọc chà vá chân nâu."
+    },
+    {
+      "id": "africa",
+      "type": "zone",
+      "zoneId": "africa",
+      "name": "Khu châu Phi",
+      "icon": "🦁",
+      "x": 76,
+      "y": 28,
+      "description": "Sư tử, hươu cao cổ, ngựa vằn, hà mã."
+    },
+    {
+      "id": "birds",
+      "type": "zone",
+      "zoneId": "birds",
+      "name": "Khu chim",
+      "icon": "🦚",
+      "x": 50,
+      "y": 18,
+      "description": "Lồng chim đi bộ xuyên qua và hồ hồng hạc."
+    },
+    {
+      "id": "reptiles",
+      "type": "zone",
+      "zoneId": "reptiles",
+      "name": "Khu bò sát",
+      "icon": "🐊",
+      "x": 20,
+      "y": 66,
+      "description": "Nhà bò sát và lưỡng cư có kiểm soát nhiệt độ."
+    },
+    {
+      "id": "aquatic",
+      "type": "zone",
+      "zoneId": "aquatic",
+      "name": "Khu thủy sinh",
+      "icon": "🐢",
+      "x": 78,
+      "y": 66,
+      "description": "Hồ thủy sinh với đường hầm kính."
+    },
+    {
+      "id": "restaurant",
+      "type": "facility",
+      "name": "Nhà hàng Rừng Xanh",
+      "icon": "🍽️",
+      "x": 50,
+      "y": 52,
+      "description": "Món Việt và đồ ăn nhanh, mở cửa 9:00 – 16:30."
+    },
+    {
+      "id": "wc-1",
+      "type": "facility",
+      "name": "Nhà vệ sinh",
+      "icon": "🚻",
+      "x": 36,
+      "y": 78,
+      "description": "Có phòng thay tã và lối đi cho xe lăn."
+    },
+    {
+      "id": "wc-2",
+      "type": "facility",
+      "name": "Nhà vệ sinh",
+      "icon": "🚻",
+      "x": 64,
+      "y": 40,
+      "description": "Gần khu châu Phi."
+    },
+    {
+      "id": "rest",
+      "type": "facility",
+      "name": "Khu nghỉ ngơi",
+      "icon": "🌳",
+      "x": 66,
+      "y": 80,
+      "description": "Ghế đá dưới bóng cây, có nước uống miễn phí."
+    }
+  ],
+  "visitsByMonth": [
+    {
+      "label": "T4",
+      "value": 18200
+    },
+    {
+      "label": "T5",
+      "value": 21400
+    },
+    {
+      "label": "T6",
+      "value": 26900
+    },
+    {
+      "label": "T7",
+      "value": 31200
+    },
+    {
+      "label": "T8",
+      "value": 29800
+    },
+    {
+      "label": "T9",
+      "value": 24100
+    }
+  ],
+  "chat": {
+    "suggestions": [
+      "Hổ ăn gì?",
+      "Giờ mở cửa sở thú?",
+      "Nhà vệ sinh ở đâu?",
+      "Gợi ý tuyến tham quan cho gia đình"
+    ],
+    "answers": [
+      {
+        "keywords": [
+          "giờ",
+          "mở cửa",
+          "đóng cửa"
+        ],
+        "answer": "Sở thú mở cửa từ 7:30 đến 17:30 mỗi ngày, kể cả cuối tuần và ngày lễ."
+      },
+      {
+        "keywords": [
+          "vé",
+          "giá"
+        ],
+        "answer": "Vé người lớn 60.000đ, trẻ em cao dưới 1,3 m 40.000đ. Trẻ dưới 1 m được miễn phí."
+      },
+      {
+        "keywords": [
+          "vệ sinh",
+          "toilet",
+          "wc"
+        ],
+        "answer": "Có 2 nhà vệ sinh: gần cổng chính (phía trái) và cạnh khu châu Phi. Bạn có thể xem trên trang Bản đồ."
+      },
+      {
+        "keywords": [
+          "ăn uống",
+          "nhà hàng",
+          "đói"
+        ],
+        "answer": "Nhà hàng Rừng Xanh nằm ở trung tâm sở thú, mở cửa 9:00 – 16:30."
+      },
+      {
+        "keywords": [
+          "tuyến",
+          "lộ trình",
+          "đi đâu"
+        ],
+        "answer": "Nếu đi cùng trẻ nhỏ, bạn nên chọn \"Tuyến gia đình\" (75 phút, 1,2 km). Có ít thời gian thì chọn \"Tuyến khám phá nhanh\" (45 phút)."
+      },
+      {
+        "keywords": [
+          "qr",
+          "quét"
+        ],
+        "answer": "Mỗi chuồng có một biển QR. Bạn mở trang \"Quét QR\" rồi hướng camera vào mã, hoặc nhập mã dạng ZOO-001."
+      },
+      {
+        "keywords": [
+          "xin chào",
+          "chào",
+          "hello",
+          "hi"
+        ],
+        "answer": "Chào bạn! Mình là Zoo Assistant. Bạn có thể hỏi về động vật, bản đồ, giờ mở cửa hoặc tuyến tham quan."
+      }
+    ],
+    "fallback": "Mình chưa có thông tin cho câu hỏi này. Bạn thử hỏi về một loài cụ thể (ví dụ \"Voi ăn gì?\") hoặc về giờ mở cửa, vé, bản đồ nhé."
+  },
+  "settings": {
+    "zooName": "Thảo Cầm Viên – ZooGuide",
+    "openHours": "7:30 – 17:30",
+    "hotline": "028 3829 1425",
+    "autoApprove": false,
+    "defaultLang": "vi"
+  }
+}
