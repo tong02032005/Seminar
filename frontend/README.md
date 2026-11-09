@@ -1,0 +1,45 @@
+# ZooGuide – Frontend (Seminar)
+
+Web thuyết minh sở thú: khách xem động vật, khu vực, bản đồ, nghe thuyết minh bằng Tiếng Việt / English / 中文
+(không cần đăng nhập). Quản trị viên vào `/admin` để quản lý.
+
+React 18 · Vite · React Router 6 · lucide-react. Không dùng thư viện UI hay bản đồ ngoài.
+
+## Chạy (đứng trong thư mục `frontend`, cần Node.js 18+)
+
+```bash
+npm install
+npm run dev
+```
+
+Mở http://localhost:5173. Backend phải đang chạy ở http://localhost:8000 (xem `../backend/README.md`).
+Địa chỉ backend đặt trong file `.env` (`VITE_API_BASE_URL`), mẫu ở `.env.example`.
+
+- Trang quản trị: http://localhost:5173/admin — **admin@zooguide.vn / admin12345**
+- Kiểm tra code: `npm run lint` · build bản chạy thật: `npm run build`
+
+## Các trang
+
+| Đường dẫn | Nội dung |
+|---|---|
+| `/` | Trang chủ, động vật nổi bật, khu vực |
+| `/animals`, `/animals/:id` | Tìm, lọc, xem chi tiết động vật + nghe thuyết minh |
+| `/zones`, `/zones/:id` | Khu vực và động vật trong khu |
+| `/map` | Bản đồ POI, bấm điểm để xem chỉ đường, nghe thuyết minh |
+| `/admin` | Tổng quan (thống kê) |
+| `/admin/animals` | Thêm/sửa/ẩn/xóa động vật, nội dung 3 ngôn ngữ, ảnh |
+| `/admin/zones` | Thêm/sửa/xóa khu vực |
+| `/admin/pois` | POI, lời thuyết minh, Dịch, Tạo âm thanh → nghe thử → Lưu âm thanh |
+| `/admin/settings` | Tên sở thú, giờ mở cửa, hotline, ngôn ngữ mặc định, bật/tắt ngôn ngữ |
+| `/admin/password` | Đổi mật khẩu |
+
+## Cấu trúc `src/`
+
+```
+services/   api.js (mọi lời gọi backend), httpClient.js, config.js, tokenStorage.js
+context/    LanguageContext (ngôn ngữ khách), AuthContext (đăng nhập admin), ToastContext
+pages/      trang khách; pages/admin/ trang quản trị
+components/ layout, common, animals, zones, map, admin (form modal 3 tab ngôn ngữ)
+utils/      translations.js (chữ giao diện vi/en/zh), format.js, validators.js
+styles/     CSS thuần; seminar.css là phần bổ sung cho bản Seminar
+```

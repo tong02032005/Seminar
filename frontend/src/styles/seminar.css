@@ -1,0 +1,61 @@
+/* ===================== SEMINAR – phần bổ sung ===================== */
+
+/* Nhãn trạng thái nhỏ (POI, âm thanh, ẩn/hiện) */
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: var(--fs-xs); font-weight: 600; background: #eef1ea; color: var(--c-muted); border: 0; white-space: nowrap; }
+.tag--ok { background: var(--c-leaf-soft); color: var(--c-success); }
+.tag--warn { background: var(--c-warn-soft); color: var(--c-warn); }
+.tag--off { background: var(--c-danger-soft); color: var(--c-danger); margin-left: 6px; }
+.tag--button { cursor: pointer; }
+.tag--button:hover { filter: brightness(0.95); }
+.tag-row { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+
+/* Huy hiệu IUCN – màu lấy từ backend */
+.badge--iucn { background: color-mix(in srgb, var(--iucn) 16%, white); color: color-mix(in srgb, var(--iucn) 80%, black); border: 1px solid color-mix(in srgb, var(--iucn) 40%, white); }
+
+/* Tab ngôn ngữ trong form admin */
+.lang-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--c-line); flex-wrap: wrap; }
+.lang-tabs__tab { padding: 8px 14px; border: 0; background: none; border-bottom: 2px solid transparent; font-weight: 600; color: var(--c-muted); cursor: pointer; margin-bottom: -1px; }
+.lang-tabs__tab.is-active { color: var(--c-forest); border-bottom-color: var(--c-forest); }
+.lang-tabs__tab small { font-weight: 400; }
+
+/* Form */
+.form-error { margin: 0; padding: 10px 14px; border-radius: var(--r-sm); background: var(--c-danger-soft); color: var(--c-danger); font-size: var(--fs-sm); }
+.form-ok { margin: 0; padding: 10px 14px; border-radius: var(--r-sm); background: var(--c-leaf-soft); color: var(--c-success); font-size: var(--fs-sm); }
+.form-thumb { width: 120px; height: 80px; object-fit: cover; border-radius: var(--r-sm); align-self: end; }
+.btn-row { display: flex; gap: 10px; justify-content: flex-end; }
+.panel--narrow { max-width: 560px; display: grid; gap: 14px; }
+.panel--narrow h3 { margin: 0; }
+.lang-toggle { display: flex; margin: 4px 0; }
+.narration-tools { display: flex; gap: 10px; margin-top: -8px; }
+
+/* Khối âm thanh trong form POI */
+.audio-box { display: grid; gap: 10px; padding: 14px; border: 1px dashed var(--c-line); border-radius: var(--r-md); background: var(--c-paper); }
+.audio-box header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.audio-box__row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: var(--fs-sm); }
+.audio-box audio { height: 36px; max-width: 100%; }
+.audio-box > .btn { justify-self: start; }
+
+/* Phân trang */
+.pager { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 20px; font-size: var(--fs-sm); color: var(--c-muted); }
+
+/* Trình phát thuyết minh cho khách */
+.narration { display: grid; gap: 10px; padding: 18px; border-radius: var(--r-lg); background: var(--c-sky); }
+.narration h3 { margin: 0; display: flex; align-items: center; gap: 8px; }
+.narration--empty { background: #f3f5f0; color: var(--c-muted); }
+.narration--compact { padding: 12px; gap: 8px; }
+.narration__audio { width: 100%; }
+.narration__status { font-size: var(--fs-xs); color: var(--c-muted); margin: 0; }
+.narration__text { margin: 0; line-height: 1.7; white-space: pre-line; }
+.narration__error { margin: 0; color: var(--c-danger); font-size: var(--fs-sm); }
+
+/* Chi tiết động vật: các mục mô tả dạng chữ dài */
+.fact-grid--text { grid-template-columns: 1fr; }
+.fact-grid--text dd { white-space: pre-line; line-height: 1.7; }
+
+/* Thẻ động vật: biểu tượng "có thuyết minh" */
+.animal-card__audio { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.92); color: var(--c-forest); }
+
+/* Bản đồ */
+.map-panel__direction { margin: 0; font-size: var(--fs-sm); color: var(--c-muted); }
+.map-panel__animal { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.btn-row--start { justify-content: flex-start; flex-wrap: wrap; }

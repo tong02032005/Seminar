@@ -1,0 +1,5 @@
+app/database/*.db
+app/static/
+app/audio_drafts/
+certs/
+__pycache__/
