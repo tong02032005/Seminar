@@ -1,11 +1,8 @@
 """Tầng model – bảng ZONE (khu vực) và ZONE_CONTENT (nội dung theo ngôn ngữ)."""
-from decimal import Decimal
-
 from sqlalchemy import (
     CheckConstraint,
     ForeignKey,
     Integer,
-    Numeric,
     String,
     Text,
     UniqueConstraint,
@@ -16,6 +13,8 @@ from app.models.base import Base
 
 
 class Zone(Base):
+    """5 khu cố định do seed tạo (app/core/seed.py FIXED_ZONES); admin chỉ sửa, không thêm/xóa."""
+
     __tablename__ = "zone"
     __table_args__ = (
         CheckConstraint(
@@ -37,14 +36,12 @@ class Zone(Base):
             "AND substr(openHours, 10, 2) GLOB '[0-5][0-9]')",
             name="ck_zone_open_hours",
         ),
-        CheckConstraint("areaM2 IS NULL OR areaM2 > 0", name="ck_zone_area"),
         {"sqlite_autoincrement": True},
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     color: Mapped[str | None] = mapped_column(String(7))
     open_hours: Mapped[str | None] = mapped_column("openHours", String(50))
-    area_m2: Mapped[Decimal | None] = mapped_column("areaM2", Numeric(10, 2))
     image: Mapped[str | None] = mapped_column(String(255))
 
 

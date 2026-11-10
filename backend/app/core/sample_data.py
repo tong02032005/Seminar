@@ -23,34 +23,17 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core import config
 from app.core.animal_details import DETAILS, FIELDS
 from app.core.narrations import NARRATIONS
+from app.core.seed import FIXED_ZONES
 from app.core.database import SessionLocal, engine, init_db
 from app.models.animal import Animal, AnimalTranslation
 from app.models.category import Category
 from app.models.poi import Poi, PoiContent
 from app.models.zone import Zone, ZoneContent
 
-# key: (màu, giờ mở cửa, diện tích m2, (tên vi, mô tả vi), (tên en, mô tả en), (tên zh, mô tả zh), tọa độ tâm khu)
-ZONES = {
-    "carnivore": ("#D84315", "07h30-17h00", "12000",
-                  ("Khu thú ăn thịt", "Nơi sinh sống của hổ, sư tử, gấu và các loài săn mồi lớn."),
-                  ("Carnivore Zone", "Home to tigers, lions, bears and other large predators."),
-                  ("食肉动物区", "老虎、狮子、熊等大型猛兽的家园。"), (10.7892, 106.7040)),
-    "primate": ("#6D4C41", "07h00-17h00", "8000",
-                ("Khu linh trưởng", "Các loài khỉ, vượn, voọc quý hiếm của Việt Nam và thế giới."),
-                ("Primate Zone", "Rare monkeys, gibbons and langurs from Vietnam and around the world."),
-                ("灵长类动物区", "来自越南和世界各地的珍稀猴类、长臂猿和叶猴。"), (10.7896, 106.7062)),
-    "savanna": ("#F9A825", "07h00-17h30", "25000",
-                ("Khu thảo nguyên", "Mô phỏng thảo nguyên châu Phi với voi, hươu cao cổ, ngựa vằn."),
-                ("Savanna Zone", "An African savanna setting with elephants, giraffes and zebras."),
-                ("草原区", "模拟非洲草原，有大象、长颈鹿和斑马。"), (10.7872, 106.7066)),
-    "bird": ("#2E7D32", "06h30-17h00", "6000",
-             ("Khu chim", "Vườn chim với công, hồng hạc, đà điểu và nhiều loài chim nhiệt đới."),
-             ("Bird Zone", "An aviary with peafowl, flamingos, ostriches and tropical birds."),
-             ("鸟类区", "饲养孔雀、火烈鸟、鸵鸟和多种热带鸟类的鸟园。"), (10.7876, 106.7034)),
-    "reptile": ("#00838F", "08h00-16h30", "3000",
-                ("Khu bò sát và thủy sinh", "Cá sấu, trăn, rắn, lưỡng cư và cá nước ngọt quý hiếm."),
-                ("Reptile & Aquatic Zone", "Crocodiles, pythons, snakes, amphibians and rare freshwater fish."),
-                ("爬行与水生动物区", "鳄鱼、蟒蛇、毒蛇、两栖动物和珍稀淡水鱼。"), (10.7864, 106.7049)),
+# Tọa độ tâm từng khu cố định (app/core/seed.py FIXED_ZONES) để đặt POI mẫu
+ZONE_CENTERS = {
+    "carnivore": (10.7892, 106.7040), "primate": (10.7896, 106.7062), "savanna": (10.7872, 106.7066),
+    "bird": (10.7876, 106.7034), "reptile": (10.7864, 106.7049),
 }
 
 # (tên khoa học, khu, nhóm, mức bảo tồn, đang hiển thị, độ phổ biến, tên vi, tên en)
@@ -118,7 +101,15 @@ DIRECTIONS = {
                 "在中央湖后面的圆顶温室内。"),
 }
 
-POI_ICON = "🐾"
+POI_ICON = "🐾"  # icon dự phòng
+# Icon riêng cho từng loài (hiện ở góc ảnh trên điểm đánh dấu bản đồ, và khi chưa có ảnh)
+ICONS = {
+    "Panthera tigris": "🐅", "Panthera leo": "🦁", "Ursus thibetanus": "🐻", "Ailurus fulgens": "🦝",
+    "Pygathrix nemaeus": "🐒", "Nomascus leucogenys": "🦧", "Elephas maximus": "🐘", "Giraffa camelopardalis": "🦒",
+    "Equus quagga": "🦓", "Hippopotamus amphibius": "🦛", "Pavo muticus": "🦚", "Phoenicopterus roseus": "🦩",
+    "Struthio camelus": "🐦", "Crocodylus siamensis": "🐊", "Malayopython reticulatus": "🐍",
+    "Ophiophagus hannah": "🐍", "Ambystoma mexicanum": "🦎", "Scleropages formosus": "🐟",
+}
 
 # Động vật CHƯA có POI (để thử: trang chi tiết ghi "Chưa có thuyết minh", thống kê đếm, thêm POI mới)
 WITHOUT_POI = {"Struthio camelus", "Scleropages formosus"}
@@ -135,21 +126,15 @@ async def _animal_name_taken(db: AsyncSession, name: str, lang: str) -> bool:
 
 
 async def load_sample_data(db: AsyncSession) -> dict[str, int]:
-    """Thêm dữ liệu mẫu còn thiếu trong MỘT giao dịch. Trả số bản ghi mới: {"zones", "animals", "pois"}."""
-    added = {"zones": 0, "animals": 0, "pois": 0}
+    """Thêm dữ liệu mẫu còn thiếu trong MỘT giao dịch. Trả số bản ghi mới: {"animals", "pois"}."""
+    added = {"animals": 0, "pois": 0}
 
+    # Khu cố định do seed tạo; tìm theo tên, admin đã đổi tên thì theo thứ tự id
+    ordered = list(await db.scalars(select(Zone.id).order_by(Zone.id)))
     zone_ids = {}
-    for key, (color, hours, area, vi, en, zh, _) in ZONES.items():
-        zone_id = await _zone_id_by_name(db, vi[0], "vi") or await _zone_id_by_name(db, en[0], "en")
-        if zone_id is None:
-            zone = Zone(color=color, open_hours=hours, area_m2=Decimal(area))
-            db.add(zone)
-            await db.flush()  # chờ CSDL cấp zone.id cho nội dung
-            zone_id = zone.id
-            db.add_all(ZoneContent(zone_id=zone_id, lang=lang, name=c[0], description=c[1])
-                       for lang, c in (("vi", vi), ("en", en), ("zh", zh)))
-            added["zones"] += 1
-        zone_ids[key] = zone_id
+    for index, (key, (_, _, vi, en, _)) in enumerate(FIXED_ZONES.items()):
+        zone_ids[key] = (await _zone_id_by_name(db, vi[0], "vi") or await _zone_id_by_name(db, en[0], "en")
+                         or ordered[index])
 
     category_ids = dict((await db.execute(select(Category.code, Category.id))).all())
     lang_names = ("vi", "en", "zh")
@@ -169,8 +154,8 @@ async def load_sample_data(db: AsyncSession) -> dict[str, int]:
             continue
 
         # POI: vị trí chuồng quanh tâm khu (lệch nhẹ theo thứ tự), tên chuồng + chỉ dẫn 3 ngôn ngữ
-        lat, lng = ZONES[zone][6]
-        poi = Poi(animal_id=animal.id, icon=POI_ICON,
+        lat, lng = ZONE_CENTERS[zone]
+        poi = Poi(animal_id=animal.id, icon=ICONS.get(sci, POI_ICON),
                   latitude=Decimal(str(round(lat + (index % 3 - 1) * 0.0003, 4))),
                   longitude=Decimal(str(round(lng + (index % 4 - 1.5) * 0.0003, 4))))
         db.add(poi)
@@ -217,8 +202,8 @@ async def update_narrations(db: AsyncSession) -> int:
         poi = await db.scalar(select(Poi).join(Animal, Animal.id == Poi.animal_id).where(Animal.scientific_name == sci))
         if poi is None:
             continue
-        if poi.icon in (None, "", "paw"):
-            poi.icon = POI_ICON
+        if poi.icon in (None, "", "paw", POI_ICON):
+            poi.icon = ICONS.get(sci, POI_ICON)
         for lang, name, text in zip(("vi", "en", "zh"), names[sci], texts):
             content = await db.get(PoiContent, (poi.id, lang))
             if content is None:
@@ -288,7 +273,7 @@ async def _main(update: bool) -> None:
     await init_db()
     async with SessionLocal() as session:
         result = await load_sample_data(session)
-        print(f"Đã thêm {result['zones']} khu vực, {result['animals']} động vật, {result['pois']} POI. "
+        print(f"Đã thêm {result['animals']} động vật, {result['pois']} POI. "
               "Dữ liệu đã có được giữ nguyên.")
         if update:
             print(f"Đã cập nhật mô tả 3 ngôn ngữ cho {await update_descriptions(session)} động vật.")

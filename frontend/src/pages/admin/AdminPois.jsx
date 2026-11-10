@@ -85,6 +85,8 @@ export default function AdminPois() {
           open={editing !== undefined}
           poiId={editing}
           animals={animals.data?.items ?? []}
+          pois={pois.data ?? []}
+          zones={zones.data ?? []}
           languages={languages}
           defaultLang={defaultLang}
           onSaved={handleSaved}

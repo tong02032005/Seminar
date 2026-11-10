@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, Clock, Maximize, MapPin } from 'lucide-react';
+import { ChevronLeft, Clock, MapPin } from 'lucide-react';
 import AnimalList from '../components/animals/AnimalList';
 import ImageWithFallback from '../components/common/ImageWithFallback';
 import ErrorState from '../components/common/ErrorState';
@@ -12,7 +12,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useToast } from '../context/ToastContext';
 import { getAnimals, getZoneById } from '../services/api';
 import { mediaUrl } from '../services/config';
-import { formatArea, formatHours } from '../utils/format';
+import { formatHours } from '../utils/format';
 
 /** UC02 bước 4 – mô tả khu và các động vật đang hiện trong khu */
 export default function ZoneDetail() {
@@ -44,7 +44,6 @@ export default function ZoneDetail() {
           {zone && (
             <ul className="zone-hero__meta">
               {zone.open_hours && <li><Clock size={16} /> {formatHours(zone.open_hours)}</li>}
-              {zone.area_m2 && <li><Maximize size={16} /> {formatArea(zone.area_m2)}</li>}
               <li>🐾 {zone.animal_count} {t('species')}</li>
             </ul>
           )}

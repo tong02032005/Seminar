@@ -3,6 +3,7 @@ import { Languages, Wand2, Save, Trash2 } from 'lucide-react';
 import Modal from '../common/Modal';
 import FormField from '../common/FormField';
 import LangTabs from './LangTabs';
+import LocationPicker from './LocationPicker';
 import { mediaUrl } from '../../services/config';
 import {
   createPoi, updatePoi, getPoiAdmin, translateNarration,
@@ -24,7 +25,7 @@ function toContents(poi, languages) {
  * UC08 – thêm/sửa POI và thuyết minh.
  * Âm thanh chỉ tạo từ lời thuyết minh ĐÃ LƯU: Tạo âm thanh → nghe thử bản nháp → Lưu âm thanh.
  */
-export default function PoiFormModal({ open, poiId, animals, languages, defaultLang, onSaved, onClose }) {
+export default function PoiFormModal({ open, poiId, animals, pois = [], zones = [], languages, defaultLang, onSaved, onClose }) {
   const [id, setId] = useState(poiId);
   const [form, setForm] = useState(EMPTY);
   const [contents, setContents] = useState({});
@@ -242,8 +243,24 @@ export default function PoiFormModal({ open, poiId, animals, languages, defaultL
               </select>
             </FormField>
           )}
-          <FormField label="Vĩ độ (latitude) *" id="p-lat" type="number" step="any" value={form.latitude} onChange={set('latitude')} error={errors.latitude} />
-          <FormField label="Kinh độ (longitude) *" id="p-lng" type="number" step="any" value={form.longitude} onChange={set('longitude')} error={errors.longitude} />
+          <div className="field span-2">
+            <label>Vị trí trên bản đồ *</label>
+            <LocationPicker
+              pois={pois}
+              zone={zones.find((z) => z.id === animals.find((a) => a.id === Number(form.animal_id))?.zone_id)}
+              currentId={id}
+              value={form}
+              onChange={(pos) => setForm((f) => ({ ...f, ...pos }))}
+            />
+            {(errors.latitude || errors.longitude) && <small className="field__error">Hãy bấm vào bản đồ để chọn vị trí.</small>}
+          </div>
+          <details className="span-2">
+            <summary>Nâng cao: nhập tọa độ bằng tay</summary>
+            <div className="form-grid">
+              <FormField label="Vĩ độ (latitude)" id="p-lat" type="number" step="any" value={form.latitude} onChange={set('latitude')} error={errors.latitude} />
+              <FormField label="Kinh độ (longitude)" id="p-lng" type="number" step="any" value={form.longitude} onChange={set('longitude')} error={errors.longitude} />
+            </div>
+          </details>
           <FormField label="Biểu tượng (emoji)" id="p-icon" value={form.icon} onChange={set('icon')} placeholder="🐯" />
 
           <div className="span-2">

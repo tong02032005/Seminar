@@ -7,6 +7,7 @@ Quy tắc chính:
 - Sửa lời thuyết minh khi đã có âm thanh: xóa file cũ, audioFile = NULL.
 """
 import logging
+import math
 import re
 import shutil
 import time
@@ -14,6 +15,7 @@ import uuid
 from pathlib import Path
 
 from fastapi.concurrency import run_in_threadpool
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import config
@@ -130,6 +132,26 @@ def _remove_files(urls: list[str | None]) -> None:
             path.unlink(missing_ok=True)
 
 
+MIN_DISTANCE_M = 15  # hai chuồng phải cách nhau ít nhất 15 m để không trùng vị trí trên bản đồ
+
+
+def distance_m(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
+    """Khoảng cách gần đúng (m) – đủ chính xác cho phạm vi một sở thú."""
+    dy = (lat2 - lat1) * 110_574
+    dx = (lng2 - lng1) * 111_320 * math.cos(math.radians((lat1 + lat2) / 2))
+    return math.hypot(dx, dy)
+
+
+async def _check_spacing(db: AsyncSession, lat: float, lng: float, exclude_id: int | None = None) -> None:
+    """409 nếu vị trí trùng (quá gần) chuồng của động vật khác."""
+    rows = await db.execute(select(Poi.id, Poi.animal_id, Poi.latitude, Poi.longitude).where(Poi.id != (exclude_id or 0)))
+    for _, animal_id, plat, plng in rows:
+        if distance_m(lat, lng, float(plat), float(plng)) < MIN_DISTANCE_M:
+            tr = await animal_repository.get_translation(db, animal_id, await default_lang(db))
+            name = tr.name if tr else f"#{animal_id}"
+            raise ConflictError(f"Vị trí trùng với chuồng {name} (phải cách ít nhất {MIN_DISTANCE_M} m)")
+
+
 async def create_poi(db: AsyncSession, data: PoiCreate) -> dict:
     """UC08 – thêm POI. 404 động vật không tồn tại; 409 động vật đã có POI; 422 thiếu nội dung ở ngôn ngữ mặc định."""
     if await animal_repository.get_by_id(db, data.animal_id) is None:
@@ -140,6 +162,7 @@ async def create_poi(db: AsyncSession, data: PoiCreate) -> dict:
     default = await default_lang(db)
     if not any(c.lang == default for c in data.contents):
         raise InvalidDataError(f"Thiếu nội dung ở ngôn ngữ mặc định ({default})")
+    await _check_spacing(db, float(data.latitude), float(data.longitude))
     poi = await poi_repository.add(
         db, Poi(animal_id=data.animal_id, icon=data.icon, latitude=data.latitude, longitude=data.longitude),
         [PoiContent(**c.model_dump()) for c in data.contents])
@@ -153,7 +176,11 @@ async def update_poi(db: AsyncSession, poi_id: int, data: PoiUpdate) -> dict:
     poi = await _get_or_404(db, poi_id)
     contents = data.contents or []
     await _validate_langs(db, contents)
-    for field, value in data.model_dump(exclude_unset=True, exclude={"contents"}).items():
+    changes = data.model_dump(exclude_unset=True, exclude={"contents"})
+    if "latitude" in changes or "longitude" in changes:
+        await _check_spacing(db, float(changes.get("latitude", poi.latitude)),
+                             float(changes.get("longitude", poi.longitude)), exclude_id=poi_id)
+    for field, value in changes.items():
         setattr(poi, field, value)
     removed: list[str] = []
     for item in contents:

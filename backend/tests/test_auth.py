@@ -22,7 +22,7 @@ def test_login_bad_email_format(client):
 
 def test_admin_api_requires_token(client):
     """Tiêu chí UC05: không có token thì mọi API quản trị trả 401."""
-    for method, url in (("get", "/api/systems/dashboard"), ("post", "/api/zones"), ("delete", "/api/animals/1"),
+    for method, url in (("get", "/api/systems/dashboard"), ("patch", "/api/zones/1"), ("delete", "/api/animals/1"),
                         ("post", "/api/translate"), ("get", "/api/auth/me")):
         assert getattr(client, method)(url).status_code == 401, url
     assert client.get("/api/systems/dashboard", headers={"Authorization": "Bearer abc"}).status_code == 401

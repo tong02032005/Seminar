@@ -22,22 +22,10 @@ def _unique_lang(value):
     return value
 
 
-class ZoneCreate(BaseModel):
-    """POST /api/zones. Sai định dạng màu / giờ / diện tích -> 422 (UC07 E1)."""
-    color: str | None = Field(None, pattern=COLOR_PATTERN, examples=["#4CAF50"])
-    open_hours: str | None = Field(None, pattern=OPEN_HOURS_PATTERN, examples=["07h00-17h00"])
-    area_m2: float | None = Field(None, gt=0)
-    image: str | None = Field(None, max_length=255)
-    contents: list[ZoneContentIn] = Field(min_length=1)
-
-    _unique = field_validator("contents")(_unique_lang)
-
-
 class ZoneUpdate(BaseModel):
-    """PATCH /api/zones/{id} – sửa một phần; nội dung gửi lên thay bản cùng ngôn ngữ."""
+    """PATCH /api/zones/{id} – sửa một phần; nội dung gửi lên thay bản cùng ngôn ngữ. Sai định dạng màu / giờ -> 422."""
     color: str | None = Field(None, pattern=COLOR_PATTERN)
     open_hours: str | None = Field(None, pattern=OPEN_HOURS_PATTERN)
-    area_m2: float | None = Field(None, gt=0)
     image: str | None = Field(None, max_length=255)
     contents: list[ZoneContentIn] | None = None
 
@@ -59,7 +47,6 @@ class ZoneOut(BaseModel):
     description: str | None = None
     color: str | None = None
     open_hours: str | None = None
-    area_m2: float | None = None
     image: str | None = None
     animal_count: int = 0  # khách: số động vật đang hiện; admin: tất cả
 
@@ -77,6 +64,5 @@ class ZoneAdmin(BaseModel):
     id: int
     color: str | None = None
     open_hours: str | None = None
-    area_m2: float | None = None
     image: str | None = None
     contents: list[ZoneContentOut]

@@ -4,11 +4,11 @@ import FormField from '../common/FormField';
 import LangTabs from './LangTabs';
 import { mediaUrl } from '../../services/config';
 import { COLOR_RE, HOURS_RE } from '../../utils/validators';
-import { createZone, getZoneAdmin, updateZone, uploadZoneImage } from '../../services/api';
+import { getZoneAdmin, updateZone, uploadZoneImage } from '../../services/api';
 
-const EMPTY = { color: '#4E8B5F', open_hours: '', area_m2: '', image: null };
+const EMPTY = { color: '#4E8B5F', open_hours: '', image: null };
 
-/** UC07 – thêm/sửa khu vực: thông tin chung + tên, mô tả theo từng ngôn ngữ */
+/** UC07 – sửa khu vực (5 khu cố định, không thêm mới): thông tin chung + tên, mô tả theo từng ngôn ngữ */
 export default function ZoneFormModal({ open, zoneId, languages, defaultLang, onSaved, onClose }) {
   const [form, setForm] = useState(EMPTY);
   const [contents, setContents] = useState({});
@@ -23,11 +23,12 @@ export default function ZoneFormModal({ open, zoneId, languages, defaultLang, on
     if (!open) return;
     setErrors({}); setFormError(''); setFile(null); setTab(defaultLang);
     const blank = Object.fromEntries(languages.map((l) => [l.code, { name: '', description: '' }]));
-    if (!zoneId) { setForm(EMPTY); setContents(blank); return; }
+    setForm(EMPTY); setContents(blank);
+    if (!zoneId) return;
     setLoading(true);
     getZoneAdmin(zoneId)
       .then((z) => {
-        setForm({ color: z.color ?? '#4E8B5F', open_hours: z.open_hours ?? '', area_m2: z.area_m2 ?? '', image: z.image });
+        setForm({ color: z.color ?? '#4E8B5F', open_hours: z.open_hours ?? '', image: z.image });
         for (const c of z.contents) blank[c.lang] = { name: c.name, description: c.description ?? '' };
         setContents(blank);
       })
@@ -43,7 +44,6 @@ export default function ZoneFormModal({ open, zoneId, languages, defaultLang, on
     const errs = {};
     if (!COLOR_RE.test(form.color)) errs.color = 'Màu dạng #RRGGBB.';
     if (form.open_hours && !HOURS_RE.test(form.open_hours)) errs.open_hours = 'Dạng 07h00-17h00.';
-    if (form.area_m2 !== '' && !(Number(form.area_m2) > 0)) errs.area_m2 = 'Diện tích phải lớn hơn 0.';
     if (!contents[defaultLang]?.name.trim()) { errs.name = 'Nhập tên khu vực bằng ngôn ngữ mặc định.'; setTab(defaultLang); }
     setErrors(errs);
     if (Object.keys(errs).length) return;
@@ -51,16 +51,15 @@ export default function ZoneFormModal({ open, zoneId, languages, defaultLang, on
     const body = {
       color: form.color,
       open_hours: form.open_hours || null,
-      area_m2: form.area_m2 === '' ? null : Number(form.area_m2),
       contents: Object.entries(contents)
         .filter(([, c]) => c.name.trim())
         .map(([lang, c]) => ({ lang, name: c.name.trim(), description: c.description.trim() || null })),
     };
     setSaving(true); setFormError('');
     try {
-      let saved = zoneId ? await updateZone(zoneId, body) : await createZone(body);
+      let saved = await updateZone(zoneId, body);
       if (file) saved = await uploadZoneImage(saved.id, file);
-      onSaved(saved, !zoneId);
+      onSaved(saved);
     } catch (err) {
       setFormError(err.message);
     } finally {
@@ -75,7 +74,7 @@ export default function ZoneFormModal({ open, zoneId, languages, defaultLang, on
     <Modal
       open={open}
       onClose={onClose}
-      title={zoneId ? 'Sửa khu vực' : 'Thêm khu vực'}
+      title="Sửa khu vực"
       footer={
         <>
           <button className="btn btn--ghost" onClick={onClose} disabled={saving}>Hủy</button>
@@ -88,7 +87,6 @@ export default function ZoneFormModal({ open, zoneId, languages, defaultLang, on
           {formError && <p className="form-error span-2" role="alert">{formError}</p>}
           <FormField label="Màu trên bản đồ" id="z-color" type="color" value={form.color} onChange={set('color')} error={errors.color} />
           <FormField label="Giờ mở cửa" id="z-hours" placeholder="07h00-17h00" value={form.open_hours} onChange={set('open_hours')} error={errors.open_hours} />
-          <FormField label="Diện tích (m²)" id="z-area" type="number" min="0" value={form.area_m2} onChange={set('area_m2')} error={errors.area_m2} />
           <FormField label="Ảnh (tối đa 2 MB)" id="z-img" hint={form.image ? 'Đã có ảnh – chọn file mới để thay.' : 'Chưa có ảnh.'}>
             <input id="z-img" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(e) => setFile(e.target.files[0] ?? null)} />
           </FormField>

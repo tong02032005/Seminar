@@ -57,5 +57,56 @@
 
 /* Bản đồ */
 .map-panel__direction { margin: 0; font-size: var(--fs-sm); color: var(--c-muted); }
-.map-panel__animal { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
 .btn-row--start { justify-content: flex-start; flex-wrap: wrap; }
+.map-panel__animal { display: flex; align-items: center; gap: 10px; margin: 12px 0 16px; padding: 8px; border-radius: var(--r-md); background: var(--c-leaf-soft); color: var(--c-forest); text-decoration: none; }
+.map-panel__animal img, .map-panel__animal .img-fallback { width: 56px; height: 56px; flex-shrink: 0; border-radius: 10px; object-fit: cover; font-size: 1.4rem; }
+
+/* Bản đồ: ảnh động vật trong marker, tên khu, cổng */
+.map-marker__photo { position: relative; display: block; width: 100%; height: 100%; transform: rotate(45deg); border-radius: 50%; overflow: hidden; }
+.map-marker__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.map-marker__photo i { position: absolute; right: -2px; bottom: -2px; font-style: normal; font-size: 0.85rem; line-height: 1; background: #fff; border-radius: 50%; padding: 2px; }
+.map-marker--zone .map-marker__pin { padding: 2px; }
+.zoo-map__zone-name {
+  position: absolute; transform: translate(-50%, -50%); z-index: 2; border: 0; cursor: pointer;
+  padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap;
+  background: var(--zone-color); color: #fff; box-shadow: var(--shadow-sm);
+}
+.zoo-map__zone-name:hover { filter: brightness(1.1); }
+.zoo-map__badge {
+  position: absolute; left: 16px; top: 14px; z-index: 2; padding: 6px 14px; border-radius: 999px;
+  background: var(--zone-color); color: #fff; font-weight: 700; box-shadow: var(--shadow-sm);
+}
+.zoo-map__gate { position: absolute; transform: translate(-50%, -100%); font-size: 1.4rem; z-index: 1; }
+.map-toolbar { justify-content: flex-start; align-items: end; }
+.map-marker__photo .img-fallback { width: 100%; height: 100%; display: grid; place-items: center; font-size: 1.4rem; background: #fff; }
+
+/* Chọn vị trí POI trên bản đồ (form admin) */
+.loc-picker__map {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  border: 2px solid var(--zone);
+  background:
+    linear-gradient(color-mix(in srgb, var(--zone) 18%, transparent), color-mix(in srgb, var(--zone) 18%, transparent)),
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(0, 0, 0, 0.05) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(0, 0, 0, 0.05) 23px 24px),
+    #EEF3E6;
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
+}
+.loc-picker__zone {
+  position: absolute; left: 8px; top: 8px;
+  padding: 2px 10px; border-radius: 999px;
+  background: var(--zone); color: #fff; font-size: 0.8rem; font-weight: 600;
+  pointer-events: none;
+}
+.loc-picker__other, .loc-picker__pin {
+  position: absolute; transform: translate(-50%, -50%); pointer-events: none; line-height: 1;
+}
+.loc-picker__other { font-size: 1.3rem; }
+.loc-picker__other.is-far { opacity: 0.35; }
+.loc-picker__pin { font-size: 2rem; transform: translate(-50%, -100%); filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35)); }
+details.span-2 summary { cursor: pointer; color: var(--color-text-muted, #666); font-size: 0.9rem; }
+details.span-2 .form-grid { margin-top: 8px; }

@@ -44,6 +44,21 @@ def test_one_poi_per_animal(client, admin, animal_ids):
     assert client.post("/api/pois", json=no_vi, headers=admin).status_code == 422
 
 
+def test_poi_position_not_duplicated(client, admin, animal_ids, poi_by_animal):
+    """Hai chuồng không được trùng vị trí (cách < 15 m) -> 409, cả khi thêm lẫn khi sửa."""
+    lion = client.get(f"/api/pois/{poi_by_animal[animal_ids['Panthera leo']]}").json()
+    near = {"latitude": lion["latitude"] + 0.00005, "longitude": lion["longitude"]}  # ~5 m
+    ostrich = animal_ids["Struthio camelus"]
+    res = client.post("/api/pois", json=_new_poi(ostrich, **near), headers=admin)
+    assert res.status_code == 409 and "trùng" in res.json()["detail"]
+    tiger_poi = poi_by_animal[animal_ids["Panthera tigris"]]
+    assert client.patch(f"/api/pois/{tiger_poi}", json=near, headers=admin).status_code == 409
+    # giữ nguyên vị trí của chính nó thì vẫn lưu được
+    tiger = client.get(f"/api/pois/{tiger_poi}").json()
+    same = {"latitude": tiger["latitude"], "longitude": tiger["longitude"]}
+    assert client.patch(f"/api/pois/{tiger_poi}", json=same, headers=admin).status_code == 200
+
+
 def test_translate(client, admin):
     """UC08 A1: dịch sang 2 ngôn ngữ còn lại, chỉ trả kết quả; lời trống -> 422."""
     res = client.post("/api/translate", json={"text": "Xin chào", "source_lang": "vi"}, headers=admin)

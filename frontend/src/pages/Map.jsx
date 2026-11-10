@@ -28,7 +28,7 @@ export default function MapPage() {
   useEffect(() => setSelectedId(focusId), [focusId]);
 
   const selected = points.data?.find((p) => p.id === selectedId) ?? null;
-  const setZone = (value) => setParams(value ? { zone: value } : {});
+  const setZone = (value) => { setSelectedId(null); setParams(value ? { zone: value } : {}); };
 
   return (
     <>
@@ -43,6 +43,7 @@ export default function MapPage() {
                 {zones.data?.map((z) => <option key={z.id} value={z.id}>{z.name}</option>)}
               </select>
             </label>
+            {zoneId && <button type="button" className="btn btn--ghost" onClick={() => setZone('')}>← {t('allZones')}</button>}
           </div>
 
           {points.error ? (
@@ -54,7 +55,8 @@ export default function MapPage() {
           ) : (
             <div className="map-layout">
               <div className="map-scroll">
-                <ZooMap points={points.data} zones={zones.data ?? []} selectedId={selectedId} onSelect={(p) => setSelectedId(p.id)} />
+                <ZooMap points={points.data} zones={zones.data ?? []} zoneId={zoneId} selectedId={selectedId}
+                  onSelect={(p) => setSelectedId(p.id)} onZoneSelect={setZone} />
               </div>
               <MapInfoPanel poi={selected} onClose={() => setSelectedId(null)} />
             </div>

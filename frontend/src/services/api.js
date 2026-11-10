@@ -44,9 +44,7 @@ export const getZones = (lang) => http.guestGet('/api/zones', { lang });
 export const getZoneById = (id, lang) => http.guestGet(`/api/zones/${id}`, { lang });
 export const getZonesAdmin = () => http.get('/api/zones', { lang: 'vi' });
 export const getZoneAdmin = (id) => http.get(`/api/zones/${id}/admin`);
-export const createZone = (data) => http.post('/api/zones', data);
 export const updateZone = (id, data) => http.patch(`/api/zones/${id}`, data);
-export const deleteZone = (id) => http.delete(`/api/zones/${id}`);
 export const uploadZoneImage = (id, file) => {
   const form = new FormData();
   form.append('file', file);

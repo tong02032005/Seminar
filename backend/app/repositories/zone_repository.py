@@ -33,11 +33,6 @@ async def animal_counts(db: AsyncSession, include_hidden: bool) -> dict[int, int
     return dict((await db.execute(stmt)).all())
 
 
-async def count_animals(db: AsyncSession, zone_id: int) -> int:
-    """Số động vật (kể cả đang ẩn) thuộc khu – dùng trước khi xóa khu (RESTRICT)."""
-    return await db.scalar(select(func.count()).select_from(Animal).where(Animal.zone_id == zone_id))
-
-
 async def list_contents(db: AsyncSession, zone_id: int) -> list[ZoneContent]:
     return list(await db.scalars(select(ZoneContent).where(ZoneContent.zone_id == zone_id)))
 
@@ -50,25 +45,9 @@ async def exists_name(db: AsyncSession, lang: str, name: str, exclude_id: int | 
     return await db.scalar(stmt.limit(1)) is not None
 
 
-async def add(db: AsyncSession, zone: Zone, contents: list[ZoneContent]) -> Zone:
-    db.add(zone)
-    await db.flush()  # chờ CSDL cấp zone.id cho khóa ngoại của nội dung
-    for content in contents:
-        content.zone_id = zone.id
-    db.add_all(contents)
-    await db.flush()
-    return zone
-
-
 async def upsert_contents(db: AsyncSession, zone_id: int, contents: list[ZoneContent]) -> None:
     """Thêm hoặc thay nội dung theo từng ngôn ngữ; ngôn ngữ không gửi giữ nguyên."""
     for content in contents:
         content.zone_id = zone_id
         await db.merge(content)
-    await db.flush()
-
-
-async def delete(db: AsyncSession, zone: Zone) -> None:
-    """Xóa khu; ZONE_CONTENT tự xóa theo (CASCADE). Còn động vật thì CSDL chặn (RESTRICT)."""
-    await db.delete(zone)
     await db.flush()
