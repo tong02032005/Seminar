@@ -1,4 +1,28 @@
 """UC09 – Quản trị hệ thống (thống kê, cài đặt, ngôn ngữ) và UC04 – Đổi ngôn ngữ."""
+from app.services import stats_service
+
+
+def test_visitor_stats(client, admin, animal_ids):
+    """Thống kê người dùng: lượt xem, số khách, khách đang online, trang xem nhiều nhất; khách không xem được số liệu."""
+    stats_service._last_seen.clear()
+    animal_id = next(iter(animal_ids.values()))
+    visit = lambda body: client.post("/api/visits", json=body).status_code  # noqa: E731
+    assert visit({"visitor_id": "khach-0001", "path": "/"}) == 204
+    assert visit({"visitor_id": "khach-0001", "path": f"/animals/{animal_id}"}) == 204
+    assert visit({"visitor_id": "khach-0002", "path": f"/animals/{animal_id}"}) == 204
+    assert visit({"visitor_id": "khach-0003"}) == 204  # chỉ tín hiệu online, không tính lượt xem
+    assert visit({"visitor_id": "x", "path": "/"}) == 422
+    assert visit({"visitor_id": "khach-0001", "path": "khong-co-gach"}) == 422
+
+    assert client.get("/api/systems/visitors").status_code == 401
+    data = client.get("/api/systems/visitors", headers=admin).json()
+    assert data["online_now"] == 3
+    assert (data["today_views"], data["today_visitors"], data["total_views"], data["total_visitors"]) == (3, 2, 3, 2)
+    assert len(data["daily"]) == 7 and data["daily"][-1]["views"] == 3
+    top = data["top_pages"][0]
+    assert (top["path"], top["views"]) == (f"/animals/{animal_id}", 2) and top["title"]
+    assert data["top_pages"][1] == {"path": "/", "title": "Trang chủ", "views": 1}
+
 
 
 def test_dashboard_counts(client, admin):

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
 import ZooMap from '../components/map/ZooMap';
@@ -27,6 +27,20 @@ export default function MapPage() {
   const [selectedId, setSelectedId] = useState(focusId);
   useEffect(() => setSelectedId(focusId), [focusId]);
 
+  // Điện thoại: bản đồ rộng hơn màn hình (vuốt ngang) -> mở sẵn ở giữa; chọn điểm thì cuộn tới khung thông tin bên dưới
+  const scrollRef = useRef(null);
+  const panelRef = useRef(null);
+  const hasMap = Boolean(points.data?.length);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+  }, [hasMap, zoneId]);
+  useEffect(() => {
+    if (selectedId && window.matchMedia('(max-width: 960px)').matches) {
+      panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [selectedId]);
+
   const selected = points.data?.find((p) => p.id === selectedId) ?? null;
   const setZone = (value) => { setSelectedId(null); setParams(value ? { zone: value } : {}); };
 
@@ -54,11 +68,16 @@ export default function MapPage() {
             <EmptyState icon="🗺️" title={t('noPoi')} />
           ) : (
             <div className="map-layout">
-              <div className="map-scroll">
-                <ZooMap points={points.data} zones={zones.data ?? []} zoneId={zoneId} selectedId={selectedId}
-                  onSelect={(p) => setSelectedId(p.id)} onZoneSelect={setZone} />
+              <div>
+                <div className="map-scroll" ref={scrollRef}>
+                  <ZooMap points={points.data} zones={zones.data ?? []} zoneId={zoneId} selectedId={selectedId}
+                    onSelect={(p) => setSelectedId(p.id)} onZoneSelect={setZone} />
+                </div>
+                <p className="map-note muted">↔ {t('mapSwipe')}</p>
               </div>
-              <MapInfoPanel poi={selected} onClose={() => setSelectedId(null)} />
+              <div ref={panelRef} style={{ scrollMarginBottom: 16 }}>
+                <MapInfoPanel poi={selected} onClose={() => setSelectedId(null)} />
+              </div>
             </div>
           )}
         </div>

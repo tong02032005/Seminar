@@ -4,6 +4,7 @@ import MainLayout from '../components/layout/MainLayout';
 import AdminLayout from '../components/layout/AdminLayout';
 import ProtectedRoute from './ProtectedRoute';
 import Loader from '../components/common/Loader';
+import { IS_STATIC } from '../services/config';
 
 // Trang khách tham quan – không cần đăng nhập
 import Home from '../pages/Home';
@@ -37,7 +38,8 @@ export default function AppRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        <Route path="/admin/login" element={<AdminLogin />} />
+        {!IS_STATIC && <Route path="/admin/login" element={<AdminLogin />} />}
+        {!IS_STATIC && (
         <Route
           path="/admin"
           element={
@@ -53,6 +55,7 @@ export default function AppRoutes() {
           <Route path="settings" element={<AdminSettings />} />
           <Route path="password" element={<ChangePassword />} />
         </Route>
+        )}
       </Routes>
     </Suspense>
   );

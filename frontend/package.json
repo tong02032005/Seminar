@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:static": "vite build --mode static",
+    "preview:static": "vite preview --mode static --outDir dist-static"
   },
   "dependencies": {
     "lucide-react": "^0.460.0",

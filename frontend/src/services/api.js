@@ -15,6 +15,9 @@ export const getPublicSettings = () => http.guestGet('/api/systems/public');
 export const getLanguages = ({ guest = false } = {}) => (guest ? http.guestGet('/api/languages') : http.get('/api/languages'));
 export const setLanguageActive = (code, isActive) => http.patch(`/api/languages/${code}`, { is_active: isActive });
 export const getDashboardStats = () => http.get('/api/systems/dashboard');
+/** Thống kê người dùng: khách báo đang xem (path có = vừa mở trang) / admin xem số liệu */
+export const trackVisit = (visitorId, path) => http.post('/api/visits', { visitor_id: visitorId, path });
+export const getVisitorStats = () => http.get('/api/systems/visitors');
 export const getSettings = () => http.get('/api/systems/settings');
 export const updateSettings = (data) => http.put('/api/systems/settings', data);
 

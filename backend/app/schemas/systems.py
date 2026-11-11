@@ -25,6 +25,36 @@ class DashboardOut(BaseModel):
     by_language: list[LanguageStats]
 
 
+# ----- THỐNG KÊ NGƯỜI DÙNG -----
+
+class VisitIn(BaseModel):
+    """Khách báo đang xem. path có = vừa mở trang (ghi lượt xem); bỏ trống = tín hiệu "vẫn đang mở"."""
+    visitor_id: str = Field(min_length=8, max_length=64, pattern=r"^[A-Za-z0-9-]+$")
+    path: str | None = Field(None, max_length=200, pattern=r"^/")
+
+
+class DailyVisits(BaseModel):
+    date: str  # YYYY-MM-DD theo giờ Việt Nam
+    views: int
+    visitors: int
+
+
+class TopPage(BaseModel):
+    path: str
+    title: str | None  # tên trang / tên động vật; None nếu không biết
+    views: int
+
+
+class VisitorStatsOut(BaseModel):
+    online_now: int  # số khách đang mở trang (có tín hiệu trong 15 giây gần nhất)
+    today_views: int
+    today_visitors: int
+    total_views: int
+    total_visitors: int
+    daily: list[DailyVisits]
+    top_pages: list[TopPage]
+
+
 # ----- CÀI ĐẶT -----
 
 class SettingsOut(BaseModel):

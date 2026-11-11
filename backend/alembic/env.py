@@ -16,7 +16,7 @@ from app.core.config import DATABASE_URL
 # Import đủ các module model để mọi bảng được đăng ký vào Base.metadata;
 # thiếu module nào thì autogenerate tưởng bảng đó bị xóa và sinh lệnh drop_table.
 from app.models import (  # noqa: F401
-    admin_account, animal, category, conservation_status, language, poi, settings, zone,
+    admin_account, animal, category, conservation_status, language, page_view, poi, settings, zone,
 )
 from app.models.base import Base
 

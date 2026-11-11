@@ -4,7 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.deps import get_optional_admin, require_admin
-from app.schemas.systems import DashboardOut, LanguageOut, LanguageUpdate, SettingsOut, SettingsUpdate
+from app.schemas.systems import (
+    DashboardOut, LanguageOut, LanguageUpdate, SettingsOut, SettingsUpdate, VisitIn, VisitorStatsOut,
+)
 from app.services import settings_service, stats_service
 
 router = APIRouter(tags=["Systems"])
@@ -14,6 +16,18 @@ router = APIRouter(tags=["Systems"])
 async def dashboard(db: AsyncSession = Depends(get_db), admin=Depends(require_admin)):
     """UC09 – thống kê tổng quan (Admin)."""
     return await stats_service.get_dashboard(db)
+
+
+@router.post("/api/visits", status_code=204)
+async def record_visit(data: VisitIn, db: AsyncSession = Depends(get_db)):
+    """Công khai – trang khách gọi khi mở trang (có path) và mỗi 5 giây (không path) để đếm người đang online."""
+    await stats_service.record_visit(db, data.visitor_id, data.path)
+
+
+@router.get("/api/systems/visitors", response_model=VisitorStatsOut)
+async def visitor_stats(db: AsyncSession = Depends(get_db), admin=Depends(require_admin)):
+    """Thống kê người dùng (Admin): đang online, lượt xem hôm nay / tổng, 7 ngày gần nhất, trang xem nhiều nhất."""
+    return await stats_service.get_visitor_stats(db)
 
 
 @router.get("/api/systems/public", response_model=SettingsOut)

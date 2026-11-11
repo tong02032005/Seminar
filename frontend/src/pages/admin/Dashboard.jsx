@@ -1,11 +1,26 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PawPrint, Eye, EyeOff, Map, MapPinned, MapPinOff } from 'lucide-react';
+import { PawPrint, Eye, EyeOff, Map, MapPinned, MapPinOff, Radio } from 'lucide-react';
 import StatCard from '../../components/admin/StatCard';
 import Skeleton from '../../components/common/Skeleton';
 import ErrorState from '../../components/common/ErrorState';
 import { useAsync } from '../../hooks/useAsync';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { getDashboardStats, getLanguages } from '../../services/api';
+import { getDashboardStats, getLanguages, getVisitorStats } from '../../services/api';
+
+const REFRESH_MS = 5_000; // tự tải lại để số "đang truy cập" luôn mới
+
+/** Số khách đang mở trang khách lúc này (backend còn lượt xem theo ngày / trang xem nhiều nhất, chưa hiển thị) */
+function OnlineNow() {
+  const { data, error, reload } = useAsync(getVisitorStats, []);
+  useEffect(() => {
+    const timer = setInterval(reload, REFRESH_MS);
+    return () => clearInterval(timer);
+  }, [reload]);
+
+  if (!data) return error ? <ErrorState error={error} onRetry={reload} /> : <Skeleton height={96} radius={14} />;
+  return <StatCard icon={Radio} label="Đang truy cập" value={data.online_now} tone="green" note="Cập nhật mỗi 5 giây" />;
+}
 
 /** UC09 – thống kê đếm trực tiếp từ CSDL */
 export default function Dashboard() {
@@ -27,6 +42,10 @@ export default function Dashboard() {
 
   return (
     <div className="stack-lg">
+      <div className="stat-grid">
+        <OnlineNow />
+      </div>
+
       <div className="stat-grid">
         {loading || !cards
           ? Array.from({ length: 6 }, (_, i) => <Skeleton key={i} height={96} radius={14} />)

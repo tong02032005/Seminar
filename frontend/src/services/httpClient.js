@@ -1,4 +1,5 @@
-import { API_CONFIG } from './config';
+import { API_CONFIG, IS_STATIC } from './config';
+import { staticGet } from './staticApi';
 import { tokenStorage } from './tokenStorage';
 
 /** Lỗi API thống nhất: message lấy từ {"detail": "..."} của FastAPI */
@@ -33,6 +34,10 @@ const errorMessage = (data, status) => {
  * 401 khi đang có token (hết hạn / đã đổi mật khẩu) → xóa token và báo AuthContext đưa về trang đăng nhập.
  */
 async function request(method, path, { params, body, isForm = false, raw = false, guest = false } = {}) {
+  if (IS_STATIC) {
+    if (method !== 'GET' || !guest) throw new ApiError('Bản tĩnh chỉ có phần xem, không có chức năng quản trị.', 0);
+    return staticGet(path, params).catch((err) => { throw new ApiError(err.message, err.status ?? 0); });
+  }
   const headers = {};
   const token = guest ? null : tokenStorage.getToken();
   if (token) headers.Authorization = `Bearer ${token}`;

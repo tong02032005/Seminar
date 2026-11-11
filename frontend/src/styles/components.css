@@ -33,7 +33,16 @@ img.is-loaded { opacity: 1; transition: opacity 400ms var(--ease); }
 
 /* ===================== ANIMAL CARD ===================== */
 .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; }
-@media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
+/* Điện thoại: 2 cột, thẻ gọn để không phải cuộn quá dài; cả thẻ là link nên ẩn nút "Xem chi tiết" */
+@media (max-width: 560px) {
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .card-grid .animal-card__cta { display: none; }
+  .card-grid .animal-card__category { left: 8px; top: 8px; padding: 2px 8px; font-size: 0.7rem; }
+  .card-grid .animal-card__body { padding: 10px 12px 12px; gap: 2px; }
+  .card-grid .animal-card__body h3 { font-size: var(--fs-base); line-height: 1.3; }
+  .card-grid .animal-card__body .scientific { font-size: var(--fs-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card-grid .animal-card__zone { font-size: var(--fs-xs); margin-top: 4px; }
+}
 
 .animal-card {
   position: relative; background: var(--c-surface); border-radius: var(--r-lg);
@@ -131,7 +140,12 @@ img.is-loaded { opacity: 1; transition: opacity 400ms var(--ease); }
   .zone-grid > * { grid-column: span 1 !important; }
   .zone-grid > :first-child { grid-column: 1 / -1 !important; }
 }
-@media (max-width: 560px) { .zone-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .zone-grid { grid-template-columns: 1fr; gap: 12px; }
+  .zone-card, .zone-grid--page .zone-card { min-height: 150px; }
+  .zone-card__overlay { padding: 16px; }
+  .zone-card__img.img-fallback { place-items: start end; padding: 14px 18px; } /* khu chưa có ảnh: lá ở góc, không đè tên */
+}
 
 /* ===================== TOUR CARD ===================== */
 .tour-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }

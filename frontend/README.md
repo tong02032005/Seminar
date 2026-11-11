@@ -18,6 +18,18 @@ Mở http://localhost:5173. Backend phải đang chạy ở http://localhost:800
 - Trang quản trị: http://localhost:5173/admin — **admin@zooguide.vn / admin12345**
 - Kiểm tra code: `npm run lint` · build bản chạy thật: `npm run build`
 
+## Bản tĩnh cho điện thoại (không cần server)
+
+Bản chỉ có phần khách xem (trang chủ, động vật, khu vực, bản đồ, nghe thuyết minh, đổi ngôn ngữ), không có admin.
+Dữ liệu là ảnh chụp tại thời điểm xuất: sửa dữ liệu trong admin xong thì xuất và tải lên lại.
+
+1. Thư mục `backend` (đã bật `.venv`): `python -m app.core.export_static` → tạo `frontend/static-site/` (JSON + ảnh + mp3)
+2. Thư mục `frontend`: `npm run build:static` → thư mục `dist-static/`
+3. Xem thử trên máy: `npm run preview:static` (mở http://localhost:4173)
+4. Đưa **nội dung** thư mục `dist-static/` lên GitHub Pages hoặc Netlify (hướng dẫn chi tiết ở tab "Mobile" trong Docs seminar).
+
+Bản tĩnh dùng đường dẫn dạng `#/animals` nên chạy được ở bất kỳ thư mục con nào, không cần cấu hình server.
+
 ## Các trang
 
 | Đường dẫn | Nội dung |
