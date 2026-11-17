@@ -1,0 +1,112 @@
+/* ===================== SEMINAR – phần bổ sung ===================== */
+
+/* Nhãn trạng thái nhỏ (POI, âm thanh, ẩn/hiện) */
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: var(--fs-xs); font-weight: 600; background: #eef1ea; color: var(--c-muted); border: 0; white-space: nowrap; }
+.tag--ok { background: var(--c-leaf-soft); color: var(--c-success); }
+.tag--warn { background: var(--c-warn-soft); color: var(--c-warn); }
+.tag--off { background: var(--c-danger-soft); color: var(--c-danger); margin-left: 6px; }
+.tag--button { cursor: pointer; }
+.tag--button:hover { filter: brightness(0.95); }
+.tag-row { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+
+/* Huy hiệu IUCN – màu lấy từ backend */
+.badge--iucn { background: color-mix(in srgb, var(--iucn) 16%, white); color: color-mix(in srgb, var(--iucn) 80%, black); border: 1px solid color-mix(in srgb, var(--iucn) 40%, white); }
+
+/* Tab ngôn ngữ trong form admin */
+.lang-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--c-line); flex-wrap: wrap; }
+.lang-tabs__tab { padding: 8px 14px; border: 0; background: none; border-bottom: 2px solid transparent; font-weight: 600; color: var(--c-muted); cursor: pointer; margin-bottom: -1px; }
+.lang-tabs__tab.is-active { color: var(--c-forest); border-bottom-color: var(--c-forest); }
+.lang-tabs__tab small { font-weight: 400; }
+
+/* Form */
+.form-error { margin: 0; padding: 10px 14px; border-radius: var(--r-sm); background: var(--c-danger-soft); color: var(--c-danger); font-size: var(--fs-sm); }
+.form-ok { margin: 0; padding: 10px 14px; border-radius: var(--r-sm); background: var(--c-leaf-soft); color: var(--c-success); font-size: var(--fs-sm); }
+.form-thumb { width: 120px; height: 80px; object-fit: cover; border-radius: var(--r-sm); align-self: end; }
+.btn-row { display: flex; gap: 10px; justify-content: flex-end; }
+.panel--narrow { max-width: 560px; display: grid; gap: 14px; }
+.panel--narrow h3 { margin: 0; }
+.lang-toggle { display: flex; margin: 4px 0; }
+.narration-tools { display: flex; gap: 10px; margin-top: -8px; }
+
+/* Khối âm thanh trong form POI */
+.audio-box { display: grid; gap: 10px; padding: 14px; border: 1px dashed var(--c-line); border-radius: var(--r-md); background: var(--c-paper); }
+.audio-box header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.audio-box__row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: var(--fs-sm); }
+.audio-box audio { height: 36px; max-width: 100%; }
+.audio-box > .btn { justify-self: start; }
+
+/* Phân trang */
+.pager { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 20px; font-size: var(--fs-sm); color: var(--c-muted); }
+
+/* Trình phát thuyết minh cho khách */
+.narration { display: grid; gap: 10px; padding: 18px; border-radius: var(--r-lg); background: var(--c-sky); }
+.narration h3 { margin: 0; display: flex; align-items: center; gap: 8px; }
+.narration--empty { background: #f3f5f0; color: var(--c-muted); }
+.narration--compact { padding: 12px; gap: 8px; }
+.narration__audio { width: 100%; }
+.narration__status { font-size: var(--fs-xs); color: var(--c-muted); margin: 0; }
+.narration__text { margin: 0; line-height: 1.7; white-space: pre-line; }
+.narration__error { margin: 0; color: var(--c-danger); font-size: var(--fs-sm); }
+
+/* Chi tiết động vật: các mục mô tả dạng chữ dài */
+.fact-grid--text { grid-template-columns: 1fr; }
+.fact-grid--text dd { white-space: pre-line; line-height: 1.7; }
+
+/* Thẻ động vật: biểu tượng "có thuyết minh" */
+.animal-card__audio { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.92); color: var(--c-forest); }
+
+/* Bản đồ */
+.map-panel__direction { margin: 0; font-size: var(--fs-sm); color: var(--c-muted); }
+.btn-row--start { justify-content: flex-start; flex-wrap: wrap; }
+.map-panel__animal { display: flex; align-items: center; gap: 10px; margin: 12px 0 16px; padding: 8px; border-radius: var(--r-md); background: var(--c-leaf-soft); color: var(--c-forest); text-decoration: none; }
+.map-panel__animal img, .map-panel__animal .img-fallback { width: 56px; height: 56px; flex-shrink: 0; border-radius: 10px; object-fit: cover; font-size: 1.4rem; }
+
+/* Bản đồ: ảnh động vật trong marker, tên khu, cổng */
+.map-marker__photo { position: relative; display: block; width: 100%; height: 100%; transform: rotate(45deg); border-radius: 50%; overflow: hidden; }
+.map-marker__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.map-marker__photo i { position: absolute; right: -2px; bottom: -2px; font-style: normal; font-size: 0.85rem; line-height: 1; background: #fff; border-radius: 50%; padding: 2px; }
+.map-marker--zone .map-marker__pin { padding: 2px; }
+.zoo-map__zone-name {
+  position: absolute; transform: translate(-50%, -50%); z-index: 2; border: 0; cursor: pointer;
+  padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap;
+  background: var(--zone-color); color: #fff; box-shadow: var(--shadow-sm);
+}
+.zoo-map__zone-name:hover { filter: brightness(1.1); }
+.zoo-map__badge {
+  position: absolute; left: 16px; top: 14px; z-index: 2; padding: 6px 14px; border-radius: 999px;
+  background: var(--zone-color); color: #fff; font-weight: 700; box-shadow: var(--shadow-sm);
+}
+.zoo-map__gate { position: absolute; transform: translate(-50%, -100%); font-size: 1.4rem; z-index: 1; }
+.map-toolbar { justify-content: flex-start; align-items: end; }
+.map-marker__photo .img-fallback { width: 100%; height: 100%; display: grid; place-items: center; font-size: 1.4rem; background: #fff; }
+
+/* Chọn vị trí POI trên bản đồ (form admin) */
+.loc-picker__map {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  border: 2px solid var(--zone);
+  background:
+    linear-gradient(color-mix(in srgb, var(--zone) 18%, transparent), color-mix(in srgb, var(--zone) 18%, transparent)),
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(0, 0, 0, 0.05) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(0, 0, 0, 0.05) 23px 24px),
+    #EEF3E6;
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
+}
+.loc-picker__zone {
+  position: absolute; left: 8px; top: 8px;
+  padding: 2px 10px; border-radius: 999px;
+  background: var(--zone); color: #fff; font-size: 0.8rem; font-weight: 600;
+  pointer-events: none;
+}
+.loc-picker__other, .loc-picker__pin {
+  position: absolute; transform: translate(-50%, -50%); pointer-events: none; line-height: 1;
+}
+.loc-picker__other { font-size: 1.3rem; }
+.loc-picker__other.is-far { opacity: 0.35; }
+.loc-picker__pin { font-size: 2rem; transform: translate(-50%, -100%); filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35)); }
+details.span-2 summary { cursor: pointer; color: var(--color-text-muted, #666); font-size: 0.9rem; }
+details.span-2 .form-grid { margin-top: 8px; }

@@ -1,0 +1,58 @@
+/* =========================================================
+   DESIGN TOKENS – ZooGuide
+   Xanh rừng làm màu chính, xanh nước nhạt làm màu phụ,
+   nền trắng ngả xanh lá, cam đất chỉ dùng cho lộ trình/điểm nhấn nhỏ.
+   ========================================================= */
+:root {
+  /* Màu */
+  --c-forest: #2f5d46;
+  --c-forest-deep: #1e4331;
+  --c-leaf: #6fa86b;
+  --c-leaf-soft: #e8f2e1;
+  --c-sky: #dceef5;
+  --c-sky-deep: #3e7fa0;
+  --c-sand: #f1e9d6;
+  --c-sun: #e07a2f;
+  --c-paper: #fbfcf8;
+  --c-surface: #ffffff;
+  --c-text: #25291f;
+  --c-muted: #5f675b;
+  --c-line: #e0e6da;
+  --c-danger: #c2412d;
+  --c-danger-soft: #fbe9e5;
+  --c-warn: #b7791f;
+  --c-warn-soft: #fbf1dc;
+  --c-success: #2f7d4a;
+
+  /* Chữ */
+  --font-display: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: clamp(1.6rem, 1.2rem + 1.4vw, 2.1rem);
+  --fs-2xl: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  --fs-hero: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+
+  /* Bo góc – lớn cho khối ảnh, nhỏ cho điều khiển */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-pill: 999px;
+
+  /* Bóng nhẹ, ngả xanh để hợp tông */
+  --shadow-sm: 0 1px 2px rgba(30, 67, 49, 0.06), 0 2px 6px rgba(30, 67, 49, 0.05);
+  --shadow-md: 0 6px 20px rgba(30, 67, 49, 0.1);
+  --shadow-lg: 0 18px 40px rgba(30, 67, 49, 0.16);
+
+  /* Bố cục */
+  --container: 1240px;
+  --header-h: 72px;
+  --gutter: clamp(16px, 4vw, 32px);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --t-fast: 160ms var(--ease);
+  --t-med: 280ms var(--ease);
+}

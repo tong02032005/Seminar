@@ -1,0 +1,109 @@
+"""Tầng schema – thống kê (UC09), cài đặt hệ thống và ngôn ngữ."""
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from app.schemas.zone import OPEN_HOURS_PATTERN
+
+# Hotline: 8–20 ký tự gồm số, dấu cách, chấm, gạch ngang, có thể bắt đầu bằng +
+HOTLINE_PATTERN = r"^\+?[0-9][0-9 .-]{6,18}[0-9]$"
+
+
+# ----- THỐNG KÊ -----
+
+class LanguageStats(BaseModel):
+    lang: str
+    pois_missing_narration: int  # số POI chưa có lời thuyết minh ở ngôn ngữ này
+    pois_missing_audio: int  # số POI chưa có file âm thanh ở ngôn ngữ này
+
+
+class DashboardOut(BaseModel):
+    total_animals: int
+    visible_animals: int
+    hidden_animals: int
+    total_zones: int
+    total_pois: int
+    animals_without_poi: int
+    by_language: list[LanguageStats]
+
+
+# ----- THỐNG KÊ NGƯỜI DÙNG -----
+
+class VisitIn(BaseModel):
+    """Khách báo đang xem. path có = vừa mở trang (ghi lượt xem); bỏ trống = tín hiệu "vẫn đang mở"."""
+    visitor_id: str = Field(min_length=8, max_length=64, pattern=r"^[A-Za-z0-9-]+$")
+    path: str | None = Field(None, max_length=200, pattern=r"^/")
+
+
+class DailyVisits(BaseModel):
+    date: str  # YYYY-MM-DD theo giờ Việt Nam
+    views: int
+    visitors: int
+
+
+class TopPage(BaseModel):
+    path: str
+    title: str | None  # tên trang / tên động vật; None nếu không biết
+    views: int
+
+
+class VisitorStatsOut(BaseModel):
+    online_now: int  # số khách đang mở trang (có tín hiệu trong 15 giây gần nhất)
+    today_views: int
+    today_visitors: int
+    total_views: int
+    total_visitors: int
+    daily: list[DailyVisits]
+    top_pages: list[TopPage]
+
+
+class VisitPeriod(BaseModel):
+    period: str  # "2026-11-01" | "2026-11" | "2026" theo giờ Việt Nam
+    visits: int
+
+
+class VisitReportOut(BaseModel):
+    total: int
+    series: list[VisitPeriod]
+
+
+# ----- CÀI ĐẶT -----
+
+class SettingsOut(BaseModel):
+    zoo_name: str
+    open_hours: str | None
+    hotline: str | None
+    default_lang: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class SettingsUpdate(BaseModel):
+    """Chỉ field được gửi mới đổi. Sai định dạng / thiếu tên sở thú -> 422 (UC09 E3)."""
+    zoo_name: str | None = Field(None, min_length=1, max_length=100)
+    open_hours: str | None = Field(None, pattern=OPEN_HOURS_PATTERN, examples=["07h00-17h00"])
+    hotline: str | None = Field(None, pattern=HOTLINE_PATTERN, max_length=20, examples=["1900 1234"])
+    default_lang: str | None = Field(None, min_length=2, max_length=10)
+
+    @model_validator(mode="after")
+    def _check(self):
+        for field in self.model_fields_set & {"zoo_name", "default_lang"}:
+            if getattr(self, field) is None:
+                raise ValueError(f"Trường '{field}' không được để null")
+        if self.open_hours:
+            open_at, close_at = self.open_hours.split("-")  # định dạng cố định nên so sánh chuỗi được
+            if open_at >= close_at:
+                raise ValueError("Giờ mở cửa phải trước giờ đóng cửa")
+        return self
+
+
+# ----- NGÔN NGỮ -----
+
+class LanguageOut(BaseModel):
+    code: str
+    name: str
+    is_active: bool
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class LanguageUpdate(BaseModel):
+    is_active: bool
