@@ -11,7 +11,7 @@ import { getDashboardStats, getLanguages, getVisitorStats } from '../../services
 const REFRESH_MS = 5_000; // tự tải lại để số "đang truy cập" luôn mới
 
 /** Số khách đang mở trang khách lúc này (backend còn lượt xem theo ngày / trang xem nhiều nhất, chưa hiển thị) */
-function OnlineNow() {
+export function OnlineNow() {
   const { data, error, reload } = useAsync(getVisitorStats, []);
   useEffect(() => {
     const timer = setInterval(reload, REFRESH_MS);

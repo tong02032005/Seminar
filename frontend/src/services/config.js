@@ -6,7 +6,7 @@
 export const IS_STATIC = import.meta.env.VITE_STATIC === '1';
 
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000', // '' = cùng địa chỉ trang (qua proxy Vite)
 };
 
 /** Backend trả đường dẫn file dạng "/static/..." → ghép địa chỉ backend; URL đầy đủ (https://...) giữ nguyên */

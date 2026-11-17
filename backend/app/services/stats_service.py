@@ -1,10 +1,11 @@
 """Tầng service – UC09 Xem thống kê (đếm trực tiếp từ CSDL) và thống kê người dùng (khách truy cập)."""
 import re
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.exceptions import BusinessRuleError
 from app.models.poi import Poi, PoiContent
 from app.models.zone import Zone
 from app.models.animal import Animal
@@ -94,3 +95,34 @@ async def get_visitor_stats(db: AsyncSession, days: int = 7) -> dict:
         "daily": daily,
         "top_pages": [{"path": path, "title": _page_title(path, names), "views": views} for path, views in pages],
     }
+
+
+# ----- BÁO CÁO LƯỢT TRUY CẬP (phiên) -----
+
+VISIT_GAP_MINUTES = 30  # cùng khách, nghỉ quá 30 phút giữa 2 lần xem thì tính là lượt mới
+PERIOD_FORMATS = {"day": "%Y-%m-%d", "month": "%Y-%m", "year": "%Y"}
+MAX_DAYS = {"day": 366, "month": 3660, "year": 3660}  # giới hạn khoảng ngày để chuỗi trả về không quá dài
+
+
+def _periods(start: date, end: date, group: str) -> list[str]:
+    """Mọi kỳ từ start tới end (gồm cả end) – để điền 0 cho kỳ không có lượt nào."""
+    if group == "day":
+        return [(start + timedelta(days=i)).isoformat() for i in range((end - start).days + 1)]
+    if group == "year":
+        return [str(y) for y in range(start.year, end.year + 1)]
+    return [f"{m // 12}-{m % 12 + 1:02d}" for m in range(start.year * 12 + start.month - 1, end.year * 12 + end.month)]
+
+
+async def get_visit_report(db: AsyncSession, from_date: date, to_date: date, group: str) -> dict:
+    """Số lượt truy cập theo ngày / tháng / năm (giờ VN) trong [from_date, to_date]; kỳ trống = 0."""
+    if from_date > to_date:
+        raise BusinessRuleError("Ngày bắt đầu phải trước hoặc bằng ngày kết thúc")
+    if (to_date - from_date).days + 1 > MAX_DAYS[group]:
+        raise BusinessRuleError(f"Khoảng thời gian tối đa {MAX_DAYS[group]} ngày khi xem theo {group}")
+    start = datetime.combine(from_date, datetime.min.time()) - VN_OFFSET
+    end = datetime.combine(to_date + timedelta(days=1), datetime.min.time()) - VN_OFFSET
+    rows = await stats_repository.visit_starts(db, start, end, PERIOD_FORMATS[group], "+7 hours",
+                                               VISIT_GAP_MINUTES * 60)
+    counts = dict(rows)
+    series = [{"period": p, "visits": counts.get(p, 0)} for p in _periods(from_date, to_date, group)]
+    return {"total": sum(s["visits"] for s in series), "series": series}

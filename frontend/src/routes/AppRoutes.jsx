@@ -21,6 +21,8 @@ const Dashboard = lazy(() => import('../pages/admin/Dashboard'));
 const AdminAnimals = lazy(() => import('../pages/admin/AdminAnimals'));
 const AdminZones = lazy(() => import('../pages/admin/AdminZones'));
 const AdminPois = lazy(() => import('../pages/admin/AdminPois'));
+const AdminVisits = lazy(() => import('../pages/admin/AdminVisits'));
+const AdminQr = lazy(() => import('../pages/admin/AdminQr'));
 const AdminSettings = lazy(() => import('../pages/admin/AdminSettings'));
 const ChangePassword = lazy(() => import('../pages/admin/ChangePassword'));
 
@@ -49,9 +51,11 @@ export default function AppRoutes() {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="visits" element={<AdminVisits />} />
           <Route path="animals" element={<AdminAnimals />} />
           <Route path="zones" element={<AdminZones />} />
           <Route path="pois" element={<AdminPois />} />
+          <Route path="qr" element={<AdminQr />} />
           <Route path="settings" element={<AdminSettings />} />
           <Route path="password" element={<ChangePassword />} />
         </Route>

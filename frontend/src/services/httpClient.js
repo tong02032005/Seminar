@@ -12,7 +12,7 @@ export class ApiError extends Error {
 }
 
 const buildUrl = (path, params) => {
-  const url = new URL(path, API_CONFIG.BASE_URL);
+  const url = new URL(path, API_CONFIG.BASE_URL || window.location.origin);
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') url.searchParams.set(key, value);
   });

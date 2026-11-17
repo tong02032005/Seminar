@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, PawPrint, Map, MapPinned, Settings, KeyRound, Menu, X, LogOut, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, PawPrint, Map, MapPinned, Settings, KeyRound, Menu, X, LogOut, ExternalLink, BarChart3, QrCode } from 'lucide-react';
 import Logo from './Logo';
 import { useAuth } from '../../context/AuthContext';
 
 const ADMIN_NAV = [
   { to: '/admin', label: 'Tổng quan', icon: LayoutDashboard, end: true },
+  { to: '/admin/visits', label: 'Thống kê truy cập', icon: BarChart3 },
   { to: '/admin/animals', label: 'Động vật', icon: PawPrint },
   { to: '/admin/zones', label: 'Khu vực', icon: Map },
   { to: '/admin/pois', label: 'POI & thuyết minh', icon: MapPinned },
+  { to: '/admin/qr', label: 'Mã QR', icon: QrCode },
   { to: '/admin/settings', label: 'Cài đặt', icon: Settings },
   { to: '/admin/password', label: 'Đổi mật khẩu', icon: KeyRound },
 ];

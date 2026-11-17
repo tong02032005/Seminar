@@ -66,3 +66,36 @@
 .kv dt { width: 140px; color: var(--c-muted); }
 .kv dd { margin: 0; font-weight: 600; }
 .panel > .checkbox { margin-bottom: 20px; }
+
+/* ===================== ADMIN – THỐNG KÊ TRUY CẬP ===================== */
+.visit-filter { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; }
+.visit-filter .field { min-width: 160px; }
+.bar-chart { display: flex; align-items: stretch; gap: 8px; height: 240px; overflow-x: auto; padding-bottom: 4px; }
+.bar-chart__col { flex: 1 0 44px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; }
+.bar-chart__col i { display: block; width: 100%; max-width: 48px; min-height: 2px; border-radius: 6px 6px 0 0; background: var(--c-leaf); }
+.bar-chart__value { font-size: var(--fs-xs); font-weight: 700; font-variant-numeric: tabular-nums; }
+.bar-chart__label { font-size: var(--fs-xs); color: var(--c-muted); white-space: nowrap; }
+
+/* ===================== ADMIN – MÃ QR ===================== */
+.qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.qr-card { display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 14px; background: var(--c-surface); box-shadow: var(--shadow-sm); }
+.qr-card img { flex-shrink: 0; border: 1px solid var(--c-line); border-radius: var(--r-sm); }
+.qr-card__body { display: grid; gap: 6px; min-width: 0; }
+.qr-card__body small { color: var(--c-muted); }
+.qr-card__link { font-size: var(--fs-xs); color: var(--c-sky-deep); word-break: break-all; }
+.qr-print { display: none; }
+@media (max-width: 420px) { .qr-grid { grid-template-columns: 1fr; } .qr-card { flex-direction: column; } }
+
+@media print {
+  .admin-sidebar, .admin-topbar, .admin-backdrop, .qr-screen { display: none !important; }
+  .admin-shell, .admin-main, .admin-content { display: block; padding: 0; margin: 0; background: #fff; }
+  .qr-print { display: block; }
+  .qr-sheet { break-inside: avoid; page-break-inside: avoid; break-after: page; text-align: center; padding: 24px 0; color: #000; }
+  .qr-sheet:last-child { break-after: auto; }
+  .qr-sheet__zone { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; margin: 0; }
+  .qr-sheet h2 { font-size: 2.6rem; margin: 8px 0 4px; }
+  .qr-sheet__sub { font-size: 1.3rem; margin: 0; }
+  .qr-sheet__sci { font-size: 1.1rem; margin: 4px 0 0; }
+  .qr-sheet img { width: 11cm; height: 11cm; margin: 16px auto; display: block; }
+  .qr-sheet__scan { font-size: 1rem; margin: 0; }
+}

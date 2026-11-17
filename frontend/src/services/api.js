@@ -18,6 +18,7 @@ export const getDashboardStats = () => http.get('/api/systems/dashboard');
 /** Thống kê người dùng: khách báo đang xem (path có = vừa mở trang) / admin xem số liệu */
 export const trackVisit = (visitorId, path) => http.post('/api/visits', { visitor_id: visitorId, path });
 export const getVisitorStats = () => http.get('/api/systems/visitors');
+export const getVisitReport = (from, to, group) => http.get('/api/systems/visitors/report', { from, to, group });
 export const getSettings = () => http.get('/api/systems/settings');
 export const updateSettings = (data) => http.put('/api/systems/settings', data);
 

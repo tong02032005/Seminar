@@ -55,6 +55,16 @@ class VisitorStatsOut(BaseModel):
     top_pages: list[TopPage]
 
 
+class VisitPeriod(BaseModel):
+    period: str  # "2026-11-01" | "2026-11" | "2026" theo giờ Việt Nam
+    visits: int
+
+
+class VisitReportOut(BaseModel):
+    total: int
+    series: list[VisitPeriod]
+
+
 # ----- CÀI ĐẶT -----
 
 class SettingsOut(BaseModel):

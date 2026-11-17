@@ -1,11 +1,15 @@
 """Tầng router – nhóm API SYSTEMS và LANGUAGES: thống kê, cài đặt, bật/tắt ngôn ngữ (UC09), đổi ngôn ngữ (UC04)."""
-from fastapi import APIRouter, Depends
+from datetime import date
+from typing import Literal
+
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.deps import get_optional_admin, require_admin
 from app.schemas.systems import (
     DashboardOut, LanguageOut, LanguageUpdate, SettingsOut, SettingsUpdate, VisitIn, VisitorStatsOut,
+    VisitReportOut,
 )
 from app.services import settings_service, stats_service
 
@@ -28,6 +32,15 @@ async def record_visit(data: VisitIn, db: AsyncSession = Depends(get_db)):
 async def visitor_stats(db: AsyncSession = Depends(get_db), admin=Depends(require_admin)):
     """Thống kê người dùng (Admin): đang online, lượt xem hôm nay / tổng, 7 ngày gần nhất, trang xem nhiều nhất."""
     return await stats_service.get_visitor_stats(db)
+
+
+@router.get("/api/systems/visitors/report", response_model=VisitReportOut)
+async def visit_report(from_date: date = Query(alias="from"), to_date: date = Query(alias="to"),
+                       group: Literal["day", "month", "year"] = "day",
+                       db: AsyncSession = Depends(get_db), admin=Depends(require_admin)):
+    """Báo cáo lượt truy cập (Admin): 1 lượt = khách vào web, nghỉ quá 30 phút tính lượt mới; giờ VN.
+    group sai / ngày sai định dạng -> 422; from > to hoặc khoảng quá dài -> 400."""
+    return await stats_service.get_visit_report(db, from_date, to_date, group)
 
 
 @router.get("/api/systems/public", response_model=SettingsOut)

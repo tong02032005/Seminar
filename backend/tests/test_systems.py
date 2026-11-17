@@ -1,4 +1,8 @@
 """UC09 – Quản trị hệ thống (thống kê, cài đặt, ngôn ngữ) và UC04 – Đổi ngôn ngữ."""
+from datetime import datetime
+
+from app.core.database import SessionLocal
+from app.models.page_view import PageView
 from app.services import stats_service
 
 
@@ -23,6 +27,40 @@ def test_visitor_stats(client, admin, animal_ids):
     assert (top["path"], top["views"]) == (f"/animals/{animal_id}", 2) and top["title"]
     assert data["top_pages"][1] == {"path": "/", "title": "Trang chủ", "views": 1}
 
+
+def _add_views(client, rows):
+    """Ghi thẳng lượt xem với giờ UTC cho trước: rows = [(visitor_id, "YYYY-MM-DD HH:MM")]."""
+    async def _insert():
+        async with SessionLocal() as db:
+            db.add_all(PageView(path="/", visitor_id=v, created_at=datetime.fromisoformat(t)) for v, t in rows)
+            await db.commit()
+    client.portal.call(_insert)
+
+
+def test_visit_report(client, admin):
+    """Lượt truy cập = phiên (nghỉ > 30 phút là lượt mới), gom theo giờ VN, điền 0, lượt bắt đầu trước 'from' không đếm lại."""
+    _add_views(client, [
+        ("khach-A", "2026-03-01 01:00"), ("khach-A", "2026-03-01 01:20"),  # cùng lượt (20 phút)
+        ("khach-A", "2026-03-01 01:51"),  # nghỉ 31 phút -> lượt mới
+        ("khach-B", "2026-03-01 17:30"),  # 00:30 ngày 02/03 giờ VN
+        ("khach-C", "2026-02-28 16:50"), ("khach-C", "2026-02-28 17:10"),  # lượt bắt đầu 23:50 ngày 28/02 giờ VN
+    ])
+    report = lambda **p: client.get("/api/systems/visitors/report", params=p, headers=admin)  # noqa: E731
+
+    data = report(**{"from": "2026-03-01", "to": "2026-03-03", "group": "day"}).json()
+    assert data == {"total": 3, "series": [{"period": "2026-03-01", "visits": 2},
+                                           {"period": "2026-03-02", "visits": 1},
+                                           {"period": "2026-03-03", "visits": 0}]}
+    data = report(**{"from": "2026-02-01", "to": "2026-04-30", "group": "month"}).json()
+    assert [(s["period"], s["visits"]) for s in data["series"]] == [("2026-02", 1), ("2026-03", 3), ("2026-04", 0)]
+    data = report(**{"from": "2025-01-01", "to": "2026-12-31", "group": "year"}).json()
+    assert data == {"total": 4, "series": [{"period": "2025", "visits": 0}, {"period": "2026", "visits": 4}]}
+
+    assert report(**{"from": "2026-03-01", "to": "2026-03-03", "group": "week"}).status_code == 422
+    assert report(**{"from": "2026-03-05", "to": "2026-03-01"}).status_code == 400
+    assert report(**{"from": "2025-01-01", "to": "2026-03-01", "group": "day"}).status_code == 400
+    assert client.get("/api/systems/visitors/report",
+                      params={"from": "2026-03-01", "to": "2026-03-03"}).status_code == 401
 
 
 def test_dashboard_counts(client, admin):
